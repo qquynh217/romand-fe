@@ -1,0 +1,22 @@
+.public-layout-footer {
+    padding: 45px 30px;
+    display: flex;
+    justify-content: space-between;
+    background-color: #282828;
+
+    .copy-right {
+        color: #fff;
+    }
+
+    .social-contact {
+        display: flex;
+        align-items: center;
+        color: var(--light);
+        gap: 15px;
+    }
+
+    .scocial-icon {
+        font-size: 20px;
+        color: var(--light);
+    }
+}

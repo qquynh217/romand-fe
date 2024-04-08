@@ -1,0 +1,25 @@
+.home-page {
+  .best-sellers {
+    .product-list-block {
+      display: flex;
+      .product-list-heading-block {
+        border-radius: 5px;
+        padding: var(--gutter-content);
+        background-color: #fafafa;
+        width: 20%;
+        display: flex;
+      }
+      .product-list_items {
+        flex: 1;
+      }
+    }
+    .product-list-heading-block {
+      display: flex;
+      align-items: end;
+      a {
+        font-size: 32px;
+        font-weight: 700;
+      }
+    }
+  }
+}

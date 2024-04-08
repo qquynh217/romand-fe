@@ -1,0 +1,32 @@
+.comment-card {
+  display: flex;
+  gap: 20px;
+  width: 850px;
+  .user-avatar {
+    margin-top: 8px;
+    border-radius: 50%;
+    overflow: hidden;
+    width: 50px;
+    height: 50px;
+    img {
+      width: 100%;
+    }
+  }
+  .comment-info {
+    font-size: 16px;
+    width: fit-content;
+    .name-date {
+      margin-top: 5px;
+    }
+    .date {
+      margin-left: 20px;
+      color: var(--light);
+      font-size: 12px;
+    }
+    .comment-content {
+      margin-top: 25px;
+      color: var(--text);
+      font-size: 14px;
+    }
+  }
+}
