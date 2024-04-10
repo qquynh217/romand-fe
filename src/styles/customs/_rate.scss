@@ -1,0 +1,18 @@
+.ant-rate {
+  color: #e7721b;
+  font-size: 12px;
+  svg {
+    width: 28px;
+    height: 28px;
+    transition: fill 100ms;
+  }
+}
+.romand-rate {
+  display: flex;
+  gap: 10px;
+  svg {
+    width: 24px;
+    height: 24px;
+    transition: fill 100ms;
+  }
+}

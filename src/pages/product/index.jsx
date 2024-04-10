@@ -1,4 +1,4 @@
-import { Carousel, Divider, Rate } from "antd";
+import { Carousel, Divider } from "antd";
 import { useParams } from "react-router-dom";
 import AddToCart from "components/pages/book-detail/components/AddToCart/AddToCart";
 import { useGetBookDetail } from "hooks/useGetBookDetail";
@@ -8,6 +8,7 @@ import { round } from "utils";
 import { item } from "constant/fakeData";
 import { useState } from "react";
 import ImageSlide from "components/pages/book-detail/components/ImageSlide";
+import Rate from "components/Rate";
 
 function ProductDetail() {
   const { slug } = useParams();
@@ -33,13 +34,8 @@ function ProductDetail() {
         <div className="product-detail-information">
           <h1 className="title">{product.name}</h1>
           <h2 className="price">${round(product.default_price, 2)} USD</h2>
-          <div className="rate">
-            <Rate
-              allowHalf
-              defaultValue={item?.rate}
-              disabled
-              style={{ fontSize: 20 }}
-            />
+          <div className="rate" style={{ display: "flex", gap: 20 }}>
+            <Rate value={item?.rate} />
             <span className="ant-rate-text">{item?.rate}</span>
           </div>
           <Divider />

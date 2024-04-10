@@ -1,8 +1,9 @@
-import { Carousel, Rate, Tag } from "antd";
+import { Carousel, Tag } from "antd";
 import { useNavigate } from "react-router-dom";
 import { round } from "utils";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { generateSlug } from "utils";
+import Rate from "../Rate";
 
 function ProductItem({ className = "", noFlex = false, item }) {
   const navigate = useNavigate();
@@ -33,12 +34,7 @@ function ProductItem({ className = "", noFlex = false, item }) {
           {item?.name}
         </p>
         <div>
-          <Rate
-            allowHalf
-            defaultValue={item?.rate}
-            disabled
-            style={{ fontSize: 12 }}
-          />
+          <Rate value={item?.rate} />
           <span className="ant-rate-text" style={{ fontSize: 12 }}>
             {item?.rate}
           </span>

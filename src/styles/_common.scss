@@ -1,6 +1,6 @@
 :root {
   // color
-  --primary-color: #f65d4e;
+  --primary-color: #fdecec;
   --color-border: #e6e6e6;
   --light: #999999;
   --border: #e6e6e6;
@@ -16,7 +16,7 @@
 html,
 body {
   font-size: 15px;
-  font-family: $nunito, sans-serif;
+  font-family: $lato, sans-serif;
   line-height: 1.6;
   color: $color-text-gray-1;
   -webkit-font-smoothing: antialiased;
@@ -32,7 +32,7 @@ body {
 * {
   margin: 0;
   box-sizing: border-box;
-  font-family: $nunito, sans-serif;
+  font-family: $lato, sans-serif;
   font-size: 15px;
 }
 

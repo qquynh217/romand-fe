@@ -23,12 +23,27 @@
       margin-bottom: 70px;
       margin-top: 70px;
     }
-
+    .rate-container {
+      .rate-average {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-left: 10px;
+        padding-right: 50px;
+        padding-top: 12px;
+        h2 {
+          font-size: 48px;
+          color: var(--primary-color);
+        }
+        &_info p {
+          margin-top: 10px;
+        }
+      }
+    }
     .comment-list {
       margin-top: 20px;
       display: flex;
       flex-direction: column;
-      gap: 30px;
       align-items: center;
     }
     .review-form-wrapper {
@@ -40,11 +55,16 @@
 }
 
 .product-detail-information {
-  padding: 48px 44px;
-  width: 45%;
+  margin-top: 48px;
+  margin-inline-end: 44px;
+  width: calc(100% - 45% - 44px * 2);
+  flex: 0 0 auto;
+  margin-inline-start: 44px;
+  max-width: 490px;
   .title {
-    font-size: 36px;
+    font-size: 32px;
     margin-bottom: 10px;
+    font-weight: 700;
   }
 
   .after-title {

@@ -1,12 +1,36 @@
 @import url("https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&display=swap");
 // font
-$poppins: "Poppins";
-$sora: "Sora";
 $nunito: "Nunito Sans";
+$lato: "Lato";
 
-//Poppins
+//Lato
 @font-face {
-  font-family: $poppins;
+  font-family: $lato;
+  src: url("resources/fonts/lato/Lato-Light.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $lato;
+  src: url("resources/fonts/lato/Lato-Regular.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: $lato;
+  src: url("resources/fonts/lato/Lato-Bold.ttf") format("truetype");
+  font-display: swap;
+  font-weight: 700;
+  font-style: normal;
+}
+
+//Nunito
+@font-face {
+  font-family: $nunito;
   src: url("resources/fonts/nunito/NunitoSans_7pt_Condensed-Light.ttf")
     format("truetype");
   font-display: swap;
@@ -15,7 +39,7 @@ $nunito: "Nunito Sans";
 }
 
 @font-face {
-  font-family: $poppins;
+  font-family: $nunito;
   src: url("resources/fonts/nunito/NunitoSans_7pt_Condensed-Regular.ttf")
     format("truetype");
   font-display: swap;
@@ -24,7 +48,7 @@ $nunito: "Nunito Sans";
 }
 
 @font-face {
-  font-family: $poppins;
+  font-family: $nunito;
   src: url("resources/fonts/nunito/NunitoSans_7pt_Condensed-Medium.ttf")
     format("truetype");
   font-display: swap;
@@ -33,7 +57,7 @@ $nunito: "Nunito Sans";
 }
 
 @font-face {
-  font-family: $poppins;
+  font-family: $nunito;
   src: url("resources/fonts/nunito/NunitoSans_7pt_Condensed-SemiBold.ttf")
     format("truetype");
   font-display: swap;
@@ -42,7 +66,7 @@ $nunito: "Nunito Sans";
 }
 
 @font-face {
-  font-family: $poppins;
+  font-family: $nunito;
   src: url("resources/fonts/nunito/NunitoSans_7pt_Condensed-Bold.ttf")
     format("truetype");
   font-display: swap;
