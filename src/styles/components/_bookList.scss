@@ -1,5 +1,6 @@
 .product-list {
-  width: 100%;
+  margin-left: -8px;
+  width: calc(100% + 8px);
   &_item {
     padding-left: 8px;
     margin-bottom: 8px;

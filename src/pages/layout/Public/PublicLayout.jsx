@@ -8,7 +8,7 @@ function PublicLayout() {
     <div className="public-layout">
       <Header />
       {/* <Navbar /> */}
-      <div className="main-container">
+      <div className="public-layout-content main-container">
         <Outlet></Outlet>
       </div>
       <Footer />

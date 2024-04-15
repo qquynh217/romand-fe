@@ -17,6 +17,8 @@
     }
   }
   .comment-container {
+    width: 80%;
+    margin: auto;
     h1 {
       text-align: center;
       font-size: 20px;
@@ -24,19 +26,47 @@
       margin-top: 70px;
     }
     .rate-container {
+      display: flex;
+      justify-content: center;
       .rate-average {
+        width: 30%;
         display: flex;
         align-items: center;
         gap: 15px;
         margin-left: 10px;
         padding-right: 50px;
         padding-top: 12px;
+        border-right: 1px solid #e3e3e3;
         h2 {
           font-size: 48px;
-          color: var(--primary-color);
+          color: #e7731bd1;
         }
         &_info p {
           margin-top: 10px;
+        }
+      }
+      .star-distribution {
+        width: 30%;
+        display: flex;
+        flex-direction: column-reverse;
+        padding-inline-end: 43px;
+        padding-top: 3px;
+        padding-left: 35px;
+        &-row {
+          display: flex;
+          align-items: center;
+          color: #e7731bd1;
+          font-weight: 700;
+          .rate-star {
+            margin-right: 5px;
+          }
+          svg {
+            width: 28px;
+            height: 28px;
+          }
+          .ant-progress {
+            margin: 0 25px 0 20px;
+          }
         }
       }
     }

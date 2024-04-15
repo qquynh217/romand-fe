@@ -93,3 +93,14 @@
     }
   }
 }
+.signup-form {
+  .form-item.gender {
+    display: flex;
+    gap: 15px;
+    .gender-option {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+  }
+}

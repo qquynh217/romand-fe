@@ -13,19 +13,17 @@ import { ROUTE_URL } from "routes";
 import { useAuthentication } from "store/useAuthentication";
 
 function Sidebar() {
-  const { user, logout } = useAuthentication();
+  const { logout } = useAuthentication();
+  const user = useAuthentication();
   const navigate = useNavigate();
+
   return (
     <div className="account-sidebar">
       <div className="user-info">
-        <Avatar
-          src={avatarList[user.avatar - 1]}
-          size={50}
-          className="avatar"
-        />
+        <Avatar src={user.avatar} size={50} className="avatar" />
         <div className="user-name">
-          <p className="name">{user.name}</p>
-          <p className="email">{user.email}</p>
+          <p className="name">{user.fullName}</p>
+          <p className="email">@{user.username}</p>
         </div>
       </div>
       <div className="account-menu">

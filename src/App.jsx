@@ -1,18 +1,19 @@
-import { StrictMode, useEffect, useState } from "react";
-import "./styles/_app.scss";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./routes";
-import "react-slideshow-image/dist/styles.css";
-import { useAuthentication } from "./store/useAuthentication";
 import axios from "axios";
-import { CartProvide } from "./context/CartContext";
+import { StrictMode, useEffect } from "react";
 import { Toaster } from "react-hot-toast";
+import { RouterProvider } from "react-router-dom";
+import "react-slideshow-image/dist/styles.css";
+import { CartProvide } from "./context/CartContext";
+import { router } from "./routes";
+import { useAuthentication } from "./store/useAuthentication";
+import "./styles/_app.scss";
 
 function App() {
   const { login } = useAuthentication();
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("bookory-user"));
-    if (user?.isLogin) {
+    const user = JSON.parse(localStorage.getItem("ROMAND_USER"));
+
+    if (user.state.isLogin) {
       axios.get(`http://localhost:8080/api/user/${user.id}`).then((res) => {
         const user = {
           email: res.data.email,

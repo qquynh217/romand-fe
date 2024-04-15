@@ -1,17 +1,21 @@
-import { Carousel, Divider } from "antd";
-import { useParams } from "react-router-dom";
-import AddToCart from "components/pages/book-detail/components/AddToCart/AddToCart";
-import { useGetBookDetail } from "hooks/useGetBookDetail";
-import Comments from "components/pages/book-detail/components/Comments/Comments";
-import { truncateString } from "utils";
-import { round } from "utils";
-import { item } from "constant/fakeData";
-import { useState } from "react";
-import ImageSlide from "components/pages/book-detail/components/ImageSlide";
+import { Divider } from "antd";
 import Rate from "components/Rate";
+import AddToCart from "components/pages/book-detail/components/AddToCart/AddToCart";
+import Comments from "components/pages/book-detail/components/Comments/Comments";
+import ImageSlide from "components/pages/book-detail/components/ImageSlide";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { Loader } from "resources/svg/Loader";
+import { productService } from "services/product";
+import { round } from "utils";
 
 function ProductDetail() {
-  const { slug } = useParams();
+  const { slug, id } = useParams();
+  const [product, setProduct] = useState({
+    images: [],
+    options: [],
+  });
+  // console.log(product);
   const [selectedOption, setSelectedOption] = useState({
     id: "",
     name: "",
@@ -20,12 +24,34 @@ function ProductDetail() {
     featured_image: "",
     image: "",
   });
-  const product = item;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await productService.getProduct({ id });
+        if (res.status == 200) {
+          const data = res.data.data;
+          const options = data.options.map((item) => ({
+            ...item,
+            id: id + "-" + item.id,
+          }));
+          setProduct({ ...data, options });
+        }
+      } catch (error) {
+        history.back();
+      }
+    };
+
+    fetchData();
+  }, [slug, id]);
   const listImg = [
     ...product.images,
-    ...product.options.map((option) => ({ id: option.id, link: option.image })),
+    ...product.options.map((option) => ({
+      id: option.id,
+      link: option.image,
+    })),
   ];
-  return (
+
+  return product.lineId ? (
     <div className="product-detail">
       <div className="product-detail-content">
         <div className="product-detail_image">
@@ -35,8 +61,8 @@ function ProductDetail() {
           <h1 className="title">{product.name}</h1>
           <h2 className="price">${round(product.default_price, 2)} USD</h2>
           <div className="rate" style={{ display: "flex", gap: 20 }}>
-            <Rate value={item?.rate} />
-            <span className="ant-rate-text">{item?.rate}</span>
+            <Rate value={product?.rate} />
+            <span className="ant-rate-text">{product?.rate}</span>
           </div>
           <Divider />
           <div className="product-options">
@@ -44,7 +70,7 @@ function ProductDetail() {
               <b>{product.variantName}</b>: {selectedOption.name}
             </p>
             <div className="product-options_items">
-              {item.options.map((item) => (
+              {product.options.map((item) => (
                 <div
                   className={`product-options_item ${
                     selectedOption.id == item.id ? "active" : ""
@@ -69,8 +95,10 @@ function ProductDetail() {
           </div>
         </div>
       </div>
-      <Comments bookid={product.id} />
+      <Comments bookid={product.lineId} />
     </div>
+  ) : (
+    <Loader />
   );
 }
 

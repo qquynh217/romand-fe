@@ -1,12 +1,21 @@
 import StarIcon from "resources/svg/Star";
 import StarOutlineIcon from "resources/svg/StarOutline";
 
-const Rate = ({ value = 0, count = 5 }) => {
+const Rate = ({ value = 0, count = 5, showValue = false, size = 24 }) => {
   return (
     <div className="romand-rate">
-      {Array.from({ length: count }, (_, i) =>
-        i < Math.round(value) ? 1 : 0
-      ).map((item) => (item == 1 ? <StarIcon /> : <StarOutlineIcon />))}
+      <div className="star-wrapper" style={{ gap: size / 2 }}>
+        {Array.from({ length: count }, (_, i) =>
+          i < Math.round(value) ? 1 : 0
+        ).map((item) =>
+          item == 1 ? (
+            <StarIcon width={size} height={size} />
+          ) : (
+            <StarOutlineIcon width={size} height={size} />
+          )
+        )}
+      </div>
+      {showValue && <b className="value">{value}</b>}
     </div>
   );
 };

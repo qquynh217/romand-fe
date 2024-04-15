@@ -1,20 +1,15 @@
 import { Col, Row } from "antd";
 import ProductItem from "../ProductItem/ProductItem";
+import { API_URL } from "services/axios";
 
 function ProductList({ col = 2, bookList = [0, 1, 2, 3], noFlex = false }) {
   const padding = col == 1 ? "0" : "";
   const lastRow = (bookList.length / col - 1) * col;
+
   return (
     <Row className="product-list">
       {bookList.map((item, id) => (
-        <Col
-          span={24 / col}
-          className={`product-list_item ${
-            (id + 1) % col === 0 ? "border-none" : ""
-          } ${id >= lastRow ? "before-none" : ""}`}
-          style={{ padding: padding }}
-          key={id}
-        >
+        <Col span={24 / col} className="product-list_item" key={id}>
           <ProductItem noFlex={noFlex} item={item} />
         </Col>
       ))}

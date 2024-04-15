@@ -1,6 +1,12 @@
-function UserIcon() {
+function UserIcon(props) {
   return (
-    <svg width="26" height="26" viewBox="0 0 26 26" aria-hidden="true">
+    <svg
+      width="26"
+      height="26"
+      viewBox="0 0 26 26"
+      aria-hidden="true"
+      {...props}
+    >
       <g fill="none" fillRule="evenodd">
         <path d="M.5.5h25v25H.5z"></path>
         <g transform="translate(1 1)" stroke="currentColor">

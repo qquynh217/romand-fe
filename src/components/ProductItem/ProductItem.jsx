@@ -9,7 +9,7 @@ function ProductItem({ className = "", noFlex = false, item }) {
   const navigate = useNavigate();
   const goToProductDetail = () => {
     const slug = generateSlug(item.name);
-    navigate(`/product/${slug}`);
+    navigate(`/product/${slug}/${encodeURIComponent(item.lineId)}`);
   };
 
   const toggleOptions = () => {
@@ -22,11 +22,17 @@ function ProductItem({ className = "", noFlex = false, item }) {
       slide.classList.add("cc-start");
     }
   };
-
+  const listImg = [
+    ...item.images,
+    ...item.options.map((option) => ({
+      id: option.id,
+      link: option.image,
+    })),
+  ];
   return (
     <div className={`product-item ${className} ${noFlex ? "no-flex" : ""}`}>
       <div className="product-item_img" onClick={goToProductDetail}>
-        <img src={item.images[0].link} alt="" className="thumb" />
+        <img src={listImg[0].link} alt="" className="thumb" />
         <Tag className="product-tag">New in</Tag>
       </div>
       <div className="product-item_info">
@@ -34,10 +40,7 @@ function ProductItem({ className = "", noFlex = false, item }) {
           {item?.name}
         </p>
         <div>
-          <Rate value={item?.rate} />
-          <span className="ant-rate-text" style={{ fontSize: 12 }}>
-            {item?.rate}
-          </span>
+          <Rate value={item?.rate} showValue size={12} />
         </div>
         <div className="product-item_price-options">
           <div className="product-options cc-start">
@@ -49,15 +52,6 @@ function ProductItem({ className = "", noFlex = false, item }) {
                   </div>
                 ))}
               </div>
-            </div>
-            <div
-              className="product-options_arrow forward"
-              onClick={toggleOptions}
-            >
-              <IoIosArrowForward />
-            </div>
-            <div className="product-options_arrow back" onClick={toggleOptions}>
-              <IoIosArrowBack />
             </div>
           </div>
           <p className="price">${round(item?.default_price, 2)} USD</p>

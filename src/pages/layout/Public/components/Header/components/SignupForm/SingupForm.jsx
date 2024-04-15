@@ -8,10 +8,16 @@ function SignupForm() {
     <form className="signup-form" onSubmit={handleSubmit(onSubmit)}>
       {contextHolder}
       <FormItem
-        label="Name*"
-        name="name"
+        label="Username*"
+        name="username"
         register={register}
-        error={errors.name}
+        error={errors.username}
+      />
+      <FormItem
+        label="Fullname*"
+        name="fullName"
+        register={register}
+        error={errors.fullName}
       />
       <FormItem
         label="Email*"
@@ -19,6 +25,48 @@ function SignupForm() {
         register={register}
         error={errors.email}
       />
+      <FormItem
+        label="Phone number*"
+        name="phone"
+        register={register}
+        error={errors.email}
+      />
+      <div className="form-item gender">
+        <label htmlFor="gender" className="label">
+          Gender:
+        </label>
+        <div className="gender-option">
+          <input
+            type="radio"
+            id="male"
+            name="gender"
+            value="male"
+            {...register("gender")}
+          />
+          <label for="male">Male</label>
+        </div>
+        <div className="gender-option">
+          <input
+            type="radio"
+            id="female"
+            name="gender"
+            value="female"
+            {...register("gender")}
+          />
+          <label for="femal">Femal</label>
+        </div>
+        <div className="gender-option">
+          <input
+            type="radio"
+            id="other"
+            name="gender"
+            value="other"
+            {...register("gender")}
+          />
+          <label for="other">Other</label>
+        </div>
+      </div>
+      <p className="error-text">{errors.gender?.message}</p>
       <FormItem
         label="Password*"
         name="password"
@@ -33,6 +81,7 @@ function SignupForm() {
         error={errors.confirm}
         type="password"
       />
+
       <button className="app-button">Created</button>
     </form>
   );

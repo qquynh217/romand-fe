@@ -1,6 +1,5 @@
-import { Input } from "antd";
-import { useRef, useState } from "react";
-import { IoEyeOutline, IoEyeOffOutline } from "react-icons/io5";
+import { useState } from "react";
+import { IoEyeOffOutline, IoEyeOutline } from "react-icons/io5";
 
 function FormItem({ placeholder, error, name, register, label, ...props }) {
   const [show, setShow] = useState(false);
@@ -10,10 +9,11 @@ function FormItem({ placeholder, error, name, register, label, ...props }) {
   const hidePassword = () => {
     setShow(false);
   };
+
   return (
     <div className="form-item">
       {label && (
-        <label htmlFor="" className="label">
+        <label htmlFor={name} className="label">
           {label}
         </label>
       )}

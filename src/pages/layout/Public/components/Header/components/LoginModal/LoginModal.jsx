@@ -17,6 +17,7 @@ function LoginModal({ open, setOpen }) {
       destroyOnClose={true}
       maskClosable={false}
       wrapClassName="login-modal-wrap"
+      width={500}
     >
       <div className="login-form-head">
         <span

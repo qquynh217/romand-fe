@@ -1,39 +1,55 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
+
 const initialVal = {
   email: "",
-  name: "",
+  username: "",
   id: "",
-  avatar: 0,
+  avatar: "",
   isLogin: false,
+  phone: "",
+  gender: "",
+  fullName: "",
+  dob: "",
 };
-export const useAuthentication = create((set) => ({
-  user: { ...initialVal },
-  login: (user) => {
-    const newUser = {
-      email: user.email,
-      name: user.name,
-      id: user.id,
-      role: user.role,
-      avatar: user.avatar,
-      isLogin: true,
-    };
-    set(() => ({ user: { ...newUser } }));
-    localStorage.setItem("bookory-user", JSON.stringify(newUser));
-  },
-  changeInfo: (info) => {
-    set((state) => ({
-      user: {
-        name: info.name,
-        avatar: info.avatar,
-        email: state.user.email,
-        id: state.user.id,
-        role: state.user.role,
-        isLogin: true,
+export const useAuthentication = create(
+  persist(
+    (set) => ({
+      ...initialVal,
+      login: (user) => {
+        const newUser = {
+          email: user.email,
+          username: user.username,
+          id: user.id,
+          role: user.role,
+          avatar: user.avatar,
+          isLogin: true,
+          phone: user.phone,
+          fullName: user.fullName,
+          gender: user.gender,
+          dob: user.dob,
+        };
+        set(() => ({ ...newUser }));
       },
-    }));
-  },
-  logout: () => {
-    set(() => ({ user: { ...initialVal } }));
-    localStorage.setItem("bookory-user", JSON.stringify(initialVal));
-  },
-}));
+      changeInfo: (info) => {
+        set(() => ({
+          avatar: info.avatar,
+          gender: info.gender,
+          fullName: info.fullName,
+          dob: info.dob,
+        }));
+      },
+      logout: () => {
+        set(() => ({ ...initialVal }));
+      },
+    }),
+    {
+      name: "ROMAND_USER",
+      partialize: (state) => ({
+        isLogin: state.isLogin,
+        username: state.username,
+        id: state.id,
+      }),
+    }
+  )
+);

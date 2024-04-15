@@ -1,36 +1,22 @@
-import { REGEX_PASSWORD } from "constant";
-import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useForm } from "react-hook-form";
-import { useAuthentication } from "store/useAuthentication";
-import axios from "axios";
-import { useContext } from "react";
+import showMessage from "components/Message";
 import { CartContext } from "context/CartContext";
+import { useContext } from "react";
+import { useForm } from "react-hook-form";
+import { userService } from "services/user";
+import { useAuthentication } from "store/useAuthentication";
+import * as yup from "yup";
 
-const getUser = async (data) => {
-  const user = await axios
-    .post("http://localhost:8080/api/user/login", {
-      username: "",
-      email: data.email,
-      pass: data.password,
-    })
-    .catch((error) => {
-      return null;
-    });
-  return user;
-};
 export const useLogin = (closeModal) => {
   const { login } = useAuthentication();
   const { fetchData } = useContext(CartContext);
   const schema = yup.object({
-    email: yup.string().required("Email is required"),
-    password: yup
-      .string()
-      .required("Password is required")
-      .matches(REGEX_PASSWORD, {
-        message:
-          "Password must contain at least 8 characters, 1 letter and 1 number",
-      }),
+    username: yup.string().required("Username is required"),
+    password: yup.string().required("Password is required"),
+    // .matches(REGEX_PASSWORD, {
+    //   message:
+    //     "Password must contain at least 8 characters, 1 letter and 1 number",
+    // }),
   });
   const {
     register,
@@ -41,22 +27,22 @@ export const useLogin = (closeModal) => {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data) => {
-    console.log(data);
-    const res = await getUser(data);
-    if (res) {
-      const user = {
-        email: res.data.email,
-        name: res.data.username,
-        id: res.data.id,
-        role: res.data.userrole,
-        avatar: res.data.avatar,
-      };
-      console.log(user);
-      login(user);
-      fetchData(user.id);
-      closeModal();
-    } else {
-      setError("password", { message: "Password or email wrong" });
+    const res = await userService.login(data);
+    try {
+      if (res.status == 200) {
+        const user = res.data.data;
+        login({ ...user, fullName: user.name });
+        fetchData(user.id);
+        closeModal();
+      } else {
+        setError("password", { message: "Wrong password or email!" });
+      }
+    } catch (error) {
+      const msg =
+        err.response.status == 401
+          ? err.response.data.data.msg
+          : "Login failed!";
+      showMessage("error", msg);
     }
   };
   return {

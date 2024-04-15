@@ -1,21 +1,19 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { useAuthentication } from "store/useAuthentication";
-import CommentCard from "../CommentCard/CommentCard";
-import ReviewForm from "../ReviewForm/ReviewForm";
-import { review as reviewInit } from "constant/fakeData";
+import { Progress } from "antd";
 import Rate from "components/Rate";
+import { useEffect, useState } from "react";
+import StarIcon from "resources/svg/Star";
+import { productService } from "services/product";
+import CommentCard from "../CommentCard/CommentCard";
 
 function Comments({ bookid }) {
-  const { user } = useAuthentication();
   const [review, setReview] = useState({});
 
   useEffect(() => {
     const fetchData = async () => {
-      // const res = await axios.get(
-      //   `http://localhost:8080/api/comments/${bookid}`
-      // );
-      setReview(reviewInit);
+      try {
+        const res = await productService.getProductFeedback({ lineId: bookid });
+        if (res.status == 200) setReview(res.data.data);
+      } catch (error) {}
     };
     fetchData();
   }, [bookid]);
@@ -24,12 +22,31 @@ function Comments({ bookid }) {
       <h1>Customer Reviews</h1>
       <div className="rate-container">
         <div className="rate-average">
-          <h2>{review.rate_avg}</h2>
+          <h2>{review.rate_avg || 0}</h2>
           <div className="rate-average_info">
             <Rate value={review.rate_avg} />
-            <p>Based on {review.comments.length} reviews</p>
+            <p>Based on {review.comments?.length} reviews</p>
           </div>
         </div>
+        <div className="star-distribution">
+          {review.rates?.map((item, id) => (
+            <div className="star-distribution-row">
+              <p className="rate-star">{id + 1}</p>
+              <StarIcon />
+              <Progress
+                strokeColor="#e7731bd1"
+                showInfo={false}
+                percent={
+                  review.comments?.length
+                    ? (item / review.comments.length) * 100
+                    : 0
+                }
+              />
+              <p className="rate-number">{item}</p>
+            </div>
+          ))}
+        </div>
+        <div className="rate-new-review-btn"></div>
       </div>
       <div className="comment-list">
         {review.comments?.map((item, key) => {

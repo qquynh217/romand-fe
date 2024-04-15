@@ -4,14 +4,21 @@ import { useForm } from "react-hook-form";
 import { REGEX_EMAIL, REGEX_PASSWORD } from "constant";
 import { message } from "antd";
 import axios from "axios";
+import { REGEX_PHONE } from "constant";
+import { userService } from "services/user";
 
 export const useSignup = () => {
   const [messageApi, contextHolder] = message.useMessage();
   const schema = yup.object({
-    name: yup.string().required("Name is required"),
+    username: yup.string().required("Name is required"),
+    fullName: yup.string().required("Full name is required"),
     email: yup.string().required("Email is required").matches(REGEX_EMAIL, {
       message: "Invalid email",
     }),
+    phone: yup
+      .string()
+      .required("Phone is required")
+      .matches(REGEX_PHONE, { message: "Invalid phone number" }),
     password: yup
       .string()
       .required("Password is required")
@@ -23,6 +30,7 @@ export const useSignup = () => {
       .string()
       .required("Confirm password is required")
       .oneOf([yup.ref("password")], "Your passwords do not match."),
+    gender: yup.string().required("Gender is required!"),
   });
   const {
     register,
@@ -34,19 +42,25 @@ export const useSignup = () => {
     resolver: yupResolver(schema),
   });
   const onSubmit = async (data) => {
-    const status = await axios
-      .post("http://localhost:8080/api/user", {
-        email: data.email,
-        username: data.name,
-        pass: data.password,
-      })
-      .catch((error) => {
-        console.log("error", error.response.data);
-        setError("email", { message: error.response.data });
+    const { confirm, fullName, ...params } = data;
+    try {
+      const res = await userService.signUp({
+        ...params,
+        role: "customer",
+        name: fullName,
       });
-    if (status?.status == 200) {
-      messageApi.success("Created successfully");
-      reset();
+      if (res?.status == 200) {
+        messageApi.success("Signup successfully!");
+        reset();
+      } else {
+        messageApi.error("Signup failed!");
+      }
+    } catch (err) {
+      const msg =
+        err.response.status == 402
+          ? err.response.data.data.msg
+          : "Signup failed!";
+      messageApi.error(msg);
     }
   };
   return {

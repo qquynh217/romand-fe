@@ -1,23 +1,22 @@
-import { Avatar, Badge, Button, Dropdown } from "antd";
+import { Button, Dropdown } from "antd";
 import { category } from "constant/fakeData";
-import { useContext, useState, useEffect } from "react";
-import { IoLogoYoutube, IoLogoInstagram } from "react-icons/io5";
+import { CartContext } from "context/CartContext";
+import { useContext, useEffect, useState } from "react";
+import { IoLogoInstagram, IoLogoYoutube } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "resources/images/logo-text.avif";
-import { ROUTE_URL } from "routes";
-import { CartContext } from "context/CartContext";
-import { useAuthentication } from "store/useAuthentication";
-import LoginModal from "./components/LoginModal/LoginModal";
-import SearchTool from "components/SearchTool";
-import UserIcon from "resources/svg/UserIcon";
 import CartIcon from "resources/svg/Cart";
 import SearchIcon from "resources/svg/Search";
+import UserIcon from "resources/svg/UserIcon";
+import { ROUTE_URL } from "routes";
+import { useAuthentication } from "store/useAuthentication";
+import LoginModal from "./components/LoginModal/LoginModal";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const { user, logout } = useAuthentication();
+  const { id, logout } = useAuthentication();
   const { totalQuantities } = useContext(CartContext);
-  const navigate = useNavigate();
+
   // Sticky Menu Area
   useEffect(() => {
     window.addEventListener("scroll", isSticky);
@@ -39,7 +38,7 @@ function Header() {
   const userMenu = [
     {
       key: 1,
-      label: <p>My Account</p>,
+      label: <Link to={ROUTE_URL.PROFILE}>My Account</Link>,
     },
     {
       key: 2,
@@ -78,17 +77,21 @@ function Header() {
               <img src={Logo} alt="logo" />
             </Link>
             <div className="category">
-              <div className="category-item">
+              <Link to={ROUTE_URL.SHOP} className="category-item">
                 <p>All products</p>
-              </div>
+              </Link>
               {category.map((item) => (
-                <div className="category-item" key={item.id}>
+                <Link
+                  to={ROUTE_URL.SHOP + "/" + item.key}
+                  className="category-item"
+                  key={item.id}
+                >
                   <p>{item.name}</p>
-                </div>
+                </Link>
               ))}
             </div>
             <div className="page-header_right">
-              {user.id && (
+              {id && (
                 <Dropdown
                   menu={{ items: userMenu }}
                   placement="bottomRight"
@@ -102,7 +105,7 @@ function Header() {
               <div className="navbar-item">
                 <SearchIcon />
               </div>
-              {user.id ? (
+              {id ? (
                 <div className="navbar-item">
                   <CartIcon />
                 </div>

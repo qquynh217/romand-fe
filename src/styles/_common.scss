@@ -1,6 +1,6 @@
 :root {
   // color
-  --primary-color: #fdecec;
+  --primary-color: #e7721b;
   --color-border: #e6e6e6;
   --light: #999999;
   --border: #e6e6e6;
@@ -62,4 +62,7 @@ a {
   margin-right: auto;
   padding-left: 8px;
   padding-right: 8px;
+}
+.public-layout-content {
+  min-height: calc(100vh - 120px);
 }

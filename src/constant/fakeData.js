@@ -3,26 +3,31 @@ export const category = [
     id: 1,
     name: "Lip",
     description: "",
+    key: "Lip",
   },
   {
     id: 2,
     name: "Eye",
     description: "",
+    key: "Eye",
   },
   {
     id: 3,
     name: "Face",
     description: "",
+    key: "Face",
   },
   {
     id: 4,
     name: "Nail",
     description: "",
+    key: "Nail",
   },
   {
     id: 5,
     name: "Gift & Sets",
     description: "",
+    key: "gift-set",
   },
 ];
 export const item = {

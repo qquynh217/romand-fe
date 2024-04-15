@@ -9,10 +9,14 @@
 }
 .romand-rate {
   display: flex;
+  justify-content: center;
+  align-items: center;
   gap: 10px;
+  .star-wrapper {
+    display: flex;
+    gap: 10px;
+  }
   svg {
-    width: 24px;
-    height: 24px;
     transition: fill 100ms;
   }
 }

@@ -1,39 +1,50 @@
-import ProductList from "components/ProductList/ProductList";
-import { getBook } from "../home";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import axios from "axios";
 import { Empty } from "antd";
+import ProductList from "components/ProductList/ProductList";
+import { item } from "constant/fakeData";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
+import { productService } from "services/product";
+import { Loader } from "resources/svg/Loader";
 
 function ShopPage() {
   const { category } = useParams();
-  // console.log(category);
-  const [books, setBooks] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
     const fetchData = async () => {
-      if (category) {
-        const data = await axios.get(
-          `http://localhost:8080/api/books/${category}`
-        );
-
-        setBooks(data.data);
-      } else {
-        const data = await getBook();
-        setBooks(data);
+      try {
+        setIsLoading(true);
+        const res = await productService.getListByCatagory({
+          category: category || "",
+        });
+        console.log(res.data.data);
+        if (res.status == 200) {
+          setProducts(res.data.data);
+        }
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
       }
     };
     fetchData();
   }, [category]);
   return (
     <div className="shop-page">
-      <div className="page-title">
-        <h1>{category ? category : "Shop"}</h1>
+      <div className="filter">
+        <div className="filter-title">
+          <HiOutlineAdjustmentsHorizontal />
+          <p>Filter</p>
+        </div>
       </div>
       <div className="book-container">
-        {books.length > 0 ? (
-          <ProductList col={4} bookList={books} noFlex />
+        {products.length > 0 ? (
+          <ProductList col={4} bookList={products} noFlex />
+        ) : isLoading ? (
+          <Loader />
         ) : (
-          <Empty description="No book" />
+          <Empty description="No product" />
         )}
       </div>
     </div>

@@ -5,7 +5,7 @@ import OrderItem from "components/pages/account/components/OrderItem";
 import { Empty } from "antd";
 
 function Purchase() {
-  const { user } = useAuthentication();
+  const user = useAuthentication();
   const [purchase, setPurchase] = useState([]);
 
   useEffect(() => {

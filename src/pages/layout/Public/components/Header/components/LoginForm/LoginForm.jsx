@@ -7,10 +7,10 @@ function LoginForm({ onCloseModal }) {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <FormItem
-        label="Email*"
-        name="email"
+        label="Username*"
+        name="username"
         register={register}
-        error={errors.email}
+        error={errors.username}
       />
       <FormItem
         label="Password*"

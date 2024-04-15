@@ -25,7 +25,7 @@ export const ROUTE_URL = {
   CATEGORY: "/shop/:category",
   ABOUT: "/about",
   CONTACT: "/contact",
-  PRODUCT: "/product/:slug",
+  PRODUCT: "/product/:slug/:id",
   PROFILE: "/account/profile",
   PURCHASE: "/account/purchase",
   CANCEL: "/account/cancel",
