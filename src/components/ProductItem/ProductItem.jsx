@@ -1,8 +1,6 @@
-import { Carousel, Tag } from "antd";
+import { Tag } from "antd";
 import { useNavigate } from "react-router-dom";
-import { round } from "utils";
-import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
-import { generateSlug } from "utils";
+import { generateSlug, round } from "utils";
 import Rate from "../Rate";
 
 function ProductItem({ className = "", noFlex = false, item }) {
@@ -26,13 +24,14 @@ function ProductItem({ className = "", noFlex = false, item }) {
     ...item.images,
     ...item.options.map((option) => ({
       id: option.id,
-      link: option.image,
+      image: option.image,
     })),
   ];
+
   return (
     <div className={`product-item ${className} ${noFlex ? "no-flex" : ""}`}>
       <div className="product-item_img" onClick={goToProductDetail}>
-        <img src={listImg[0].link} alt="" className="thumb" />
+        <img src={listImg[0].image} alt="" className="thumb" />
         <Tag className="product-tag">New in</Tag>
       </div>
       <div className="product-item_info">

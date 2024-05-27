@@ -1,16 +1,14 @@
 import { Button, Col, DatePicker, Form, Input, Radio, Row } from "antd";
-import { DATE_FORMAT } from "constant";
+import UploadAvatar from "components/UploadAvatar";
 import dayjs from "dayjs";
 import { useChangeProfile } from "hooks/useChangeProfile";
-import UploadAvatar from "components/UploadAvatar";
 import { useAuthentication } from "store/useAuthentication";
 
 function Profile() {
   const { contextHolder, form, onHandleChangeInfo } = useChangeProfile();
-  const { username, fullName, email, id, avatar, phone, gender, dob, role } =
+  const { username, fullName, email, id, avatar, phone, gender, dob } =
     useAuthentication();
-  const user = useAuthentication();
-  console.log(user);
+
   const initValue = {
     username,
     fullName,

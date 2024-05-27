@@ -18,7 +18,6 @@ function ShopPage() {
         const res = await productService.getListByCatagory({
           category: category || "",
         });
-        console.log(res.data.data);
         if (res.status == 200) {
           setProducts(res.data.data);
         }
@@ -39,10 +38,10 @@ function ShopPage() {
         </div>
       </div>
       <div className="book-container">
-        {products.length > 0 ? (
-          <ProductList col={4} bookList={products} noFlex />
-        ) : isLoading ? (
+        {isLoading ? (
           <Loader />
+        ) : products.length > 0 ? (
+          <ProductList col={4} bookList={products} noFlex />
         ) : (
           <Empty description="No product" />
         )}

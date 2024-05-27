@@ -23,6 +23,8 @@ export const useChangeProfile = () => {
       if (res.status == 200) {
         showMessage("success", "Save profile successful!");
         changeInfo(value);
+      } else {
+        showMessage("error", "Save profile failed!");
       }
     } catch (error) {
       showMessage("error", "Save profile failed!");

@@ -1,19 +1,22 @@
-import axios from "axios";
-import { API_URL } from "../axios";
+import { API_URL, axiosCus } from "../axios";
 
 class UserService {
   baseUrl = API_URL + "/user";
   signUp(params) {
-    return axios.post(this.baseUrl + "/signup", params);
+    return axiosCus.post(this.baseUrl + "/signup", params);
   }
   login(params) {
-    return axios.post(this.baseUrl + "/login", params);
+    return axiosCus.post(this.baseUrl + "/login", params);
   }
   changeInfo(params) {
-    return axios.post(this.baseUrl + "/changeInfo", {
+    return axiosCus.post(this.baseUrl + "/changeInfo", {
       ...params,
       customer_id: params.id,
     });
+  }
+  getUser(params) {
+    const { username } = params;
+    return axiosCus.post(this.baseUrl + "/getUser", { username });
   }
 }
 

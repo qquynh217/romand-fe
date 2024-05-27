@@ -13,6 +13,7 @@ import ava5 from "resources/images/avatar/ava5.png";
 import ava6 from "resources/images/avatar/ava6.png";
 
 export const DATE_FORMAT = "YYYY-MM-DD";
+export const USER_DETAIL = "ROMAND_USER";
 
 export const categories = [
   { id: 1, name: "Comedy", icon: FaMehRollingEyes },

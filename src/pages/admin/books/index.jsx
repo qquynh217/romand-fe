@@ -7,7 +7,6 @@ function AllBook() {
   const [messageApi, contextHolder] = message.useMessage();
   const [bookList, setProductList] = useState([]);
   const handleDelete = async (id) => {
-    console.log(id);
     const res = await axios.post(`http://localhost:8080/api/book/delete/${id}`);
     console.log(res);
     if (res.data == "200") {

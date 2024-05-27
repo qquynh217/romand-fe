@@ -37,7 +37,9 @@ const ImageSlide = ({ listImg, selectedOption }) => {
   };
   useEffect(() => {
     if (selectedOption.id) {
-      const index = listImg.findIndex((item) => item.id == selectedOption.id);
+      const index = listImg.findIndex(
+        (item) => item.image == selectedOption.image
+      );
       if (index) {
         slideRef.current.goTo(index);
       }
@@ -60,7 +62,7 @@ const ImageSlide = ({ listImg, selectedOption }) => {
       >
         {listImg.map((image) => (
           <img
-            src={image.link}
+            src={image.image}
             alt=""
             key={image.id}
             className="product-image"
@@ -85,7 +87,7 @@ const ImageSlide = ({ listImg, selectedOption }) => {
               slideRef.current.goTo(index);
             }}
           >
-            <img src={image.link} alt="" key={image.id} />
+            <img src={image.image} alt="" key={image.id} />
           </div>
         ))}
       </Carousel>

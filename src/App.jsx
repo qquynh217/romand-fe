@@ -7,6 +7,7 @@ import { CartProvide } from "./context/CartContext";
 import { router } from "./routes";
 import { useAuthentication } from "./store/useAuthentication";
 import "./styles/_app.scss";
+import { userService } from "./services/user";
 
 function App() {
   const { login } = useAuthentication();
@@ -14,14 +15,19 @@ function App() {
     const user = JSON.parse(localStorage.getItem("ROMAND_USER"));
 
     if (user.state.isLogin) {
-      axios.get(`http://localhost:8080/api/user/${user.id}`).then((res) => {
+      userService.getUser({ username: user.state.username }).then((res) => {
         const user = {
-          email: res.data.email,
-          name: res.data.username,
-          id: res.data.id,
-          role: res.data.userrole,
-          avatar: res.data.avatar,
+          email: res.data.data.email || "",
+          username: res.data.data.username || "",
+          id: res.data.data.id || "",
+          role: res.data.data.role || "",
+          avatar: res.data.data.avatar || "",
+          phone: res.data.data.phone || "",
+          fullName: res.data.data.name || "",
+          gender: res.data.data.gender || "",
+          dob: res.data.data.dob || "",
         };
+
         login(user);
       });
     }

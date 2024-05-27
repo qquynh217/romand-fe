@@ -1,5 +1,4 @@
 import { Button, Dropdown } from "antd";
-import { category } from "constant/fakeData";
 import { CartContext } from "context/CartContext";
 import { useContext, useEffect, useState } from "react";
 import { IoLogoInstagram, IoLogoYoutube } from "react-icons/io5";
@@ -11,19 +10,25 @@ import UserIcon from "resources/svg/UserIcon";
 import { ROUTE_URL } from "routes";
 import { useAuthentication } from "store/useAuthentication";
 import LoginModal from "./components/LoginModal/LoginModal";
+import { productService } from "services/product";
 
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, logout } = useAuthentication();
   const { totalQuantities } = useContext(CartContext);
-
+  const [category, setCategory] = useState([]);
   // Sticky Menu Area
+
   useEffect(() => {
     window.addEventListener("scroll", isSticky);
+    productService.getCategory().then((res) => {
+      const data = res.map((item) => ({ ...item, key: item.name }));
+      setCategory(data);
+    });
     return () => {
       window.removeEventListener("scroll", isSticky);
     };
-  });
+  }, []);
 
   /* Method that will fix header after a specific scrollable */
   const isSticky = (e) => {
@@ -57,6 +62,19 @@ function Header() {
       ),
     },
   ];
+
+  const handleToggleSearch = () => {
+    const search = document.querySelector(".header-search-container");
+    const main = document.querySelector(".public-layout-content");
+
+    if (search.style.display == "none") {
+      search.style.display = "block";
+      main.style.display = "none";
+    } else {
+      search.style.display = "none";
+      main.style.display = "block";
+    }
+  };
   return (
     <div className="public-layout_header main-container">
       <div className="announcement-bar">
@@ -102,13 +120,13 @@ function Header() {
                   </div>
                 </Dropdown>
               )}
-              <div className="navbar-item">
+              <div className="navbar-item" onClick={handleToggleSearch}>
                 <SearchIcon />
               </div>
               {id ? (
-                <div className="navbar-item">
+                <Link to={ROUTE_URL.CART} className="navbar-item">
                   <CartIcon />
-                </div>
+                </Link>
               ) : (
                 <Button
                   type="primary"

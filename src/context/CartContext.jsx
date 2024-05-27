@@ -1,6 +1,8 @@
-import { createContext, useState, useEffect, useContext } from "react";
 import axios from "axios";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
+import { cartService } from "services/cart";
+import { useAuthentication } from "store/useAuthentication";
 
 export const CartContext = createContext();
 
@@ -9,38 +11,44 @@ export const CartProvide = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [qty, setQty] = useState(1);
+  const user = useAuthentication();
   let foundProduct;
   let index;
 
   const fetchData = async (id) => {
-    const res = await axios.get(`http://localhost:8080/api/carts/${id}`);
-    let sum = res.data.reduce(
-      (acc, item) => acc + item.price * item.quantity,
+    const res = await cartService.viewCart({ customer_id: id });
+
+    let sum = res.data.data.reduce(
+      (acc, item) => acc + item.product.price * item.qty,
       0
     );
-    let sumQuantity = res.data.reduce((acc, item) => acc + item.quantity, 0);
-    setCartItems(res.data);
+    let sumQuantity = res.data.data.reduce(
+      (acc, item) => acc + item.quantity,
+      0
+    );
+    setCartItems(res.data.data);
     setTotalPrice(sum);
     setTotalQuantities(sumQuantity);
   };
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("bookory-user"));
     if (user?.id) {
       fetchData(user.id);
     }
-  }, []);
+  }, [user.id]);
   const onAdd = async (product, quantity) => {
-    const user = JSON.parse(localStorage.getItem("bookory-user"));
     if (user.id) {
-      const res = await axios.post("http://localhost:8080/api/cart/insert", {
-        userid: user.id,
-        bookid: product.id,
-        quantity: quantity,
+      const res = await cartService.addToCart({
+        customer_id: user.id,
+        product_id: product.id,
+        qty: quantity,
+        totalPrice: product.price * quantity,
       });
-      if (res.data == 200) {
+      if (res.status == 200) {
         console.log(product);
         await fetchData(user.id);
-        toast.success(`${quantity} ${product.title} added to the cart`);
+        toast.success(`${quantity} ${product.name} added to the cart`);
+      } else {
+        toast.error("Add to cart failed!");
       }
     } else {
       toast.error("Please login to add to cart !");
@@ -69,25 +77,25 @@ export const CartProvide = ({ children }) => {
     foundProduct = cartItems.find((item) => item.id === id);
     index = cartItems.findIndex((product) => product.id === id);
     const newCartItems = cartItems.filter((item) => item.id !== id);
-
+    console.log(id, cartItems);
     if (value === "inc") {
       newCartItems.splice(index, 0, {
         ...foundProduct,
-        quantity: foundProduct.quantity + 1,
+        quantity: foundProduct.qty + 1,
       });
-      await updateQuantity(id, 1);
+      // await updateQuantity(id, 1);
       setCartItems([...newCartItems]);
-      setTotalPrice((prev) => prev + foundProduct.price);
+      setTotalPrice((prev) => prev + foundProduct.product.price);
       setTotalQuantities((prev) => prev + 1);
     } else if (value === "dec") {
       if (foundProduct.quantity > 1) {
         newCartItems.splice(index, 0, {
           ...foundProduct,
-          quantity: foundProduct.quantity - 1,
+          qty: foundProduct.qty - 1,
         });
-        await updateQuantity(id, 0);
+        // await updateQuantity(id, 0);
         setCartItems([...newCartItems]);
-        setTotalPrice((prev) => prev - foundProduct.price);
+        setTotalPrice((prev) => prev - foundProduct.product.price);
         setTotalQuantities((prev) => prev - 1);
       }
     }

@@ -32,7 +32,6 @@ function ProductDetail() {
           const data = res.data.data;
           const options = data.options.map((item) => ({
             ...item,
-            id: id + "-" + item.id,
           }));
           setProduct({ ...data, options });
         }
@@ -47,7 +46,7 @@ function ProductDetail() {
     ...product.images,
     ...product.options.map((option) => ({
       id: option.id,
-      link: option.image,
+      image: option.image,
     })),
   ];
 
@@ -87,7 +86,7 @@ function ProductDetail() {
           </div>
           <div className="quantity">
             <p>Quantity</p>
-            <AddToCart item={product} />
+            <AddToCart item={selectedOption} />
           </div>
           <div className="description-container">
             <h1>Description</h1>

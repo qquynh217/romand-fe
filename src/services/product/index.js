@@ -15,6 +15,14 @@ class ProductService {
     const lineId = params.lineId;
     return axios.post(this.baseUrl + "/getFeedback", { lineId });
   }
+  getCategory = async () => {
+    const res = await axios.post(this.baseUrl + "/getCategory");
+    return res.data.data;
+  };
+  searchProduct = async ({ name }) => {
+    const res = await axios.post(this.baseUrl + "/searchProduct", { name });
+    return res.data.data || [];
+  };
 }
 
 export const productService = new ProductService();
