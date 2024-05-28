@@ -16,6 +16,7 @@ import Cart from "pages/account/cart";
 import CheckoutSuccess from "pages/checkout-success";
 import Pending from "pages/account/pending";
 import ProductDetail from "pages/product";
+import Address from "pages/account/address";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -34,6 +35,7 @@ export const ROUTE_URL = {
   ADMIN_BOOKS: "/admin/books",
   ADMIN_VIEW_BOOK: "/admin/book/:id",
   CHECKOUT: "/checkout-success/:id",
+  ADDRESS: "/account/address",
 };
 export const DEFAULT_PAGE = ROUTE_URL.HOME;
 
@@ -57,6 +59,14 @@ export const routes = [
         element: (
           <Account>
             <Profile />
+          </Account>
+        ),
+      },
+      {
+        path: ROUTE_URL.ADDRESS,
+        element: (
+          <Account>
+            <Address />
           </Account>
         ),
       },

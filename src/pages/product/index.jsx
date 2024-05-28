@@ -3,7 +3,7 @@ import Rate from "components/Rate";
 import AddToCart from "components/pages/book-detail/components/AddToCart/AddToCart";
 import Comments from "components/pages/book-detail/components/Comments/Comments";
 import ImageSlide from "components/pages/book-detail/components/ImageSlide";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Loader } from "resources/svg/Loader";
 import { productService } from "services/product";
@@ -49,7 +49,10 @@ function ProductDetail() {
       image: option.image,
     })),
   ];
-
+  const totalAvailable = useMemo(() => {
+    const total = product.options.reduce((res, item) => item.quantity + res, 0);
+    return total;
+  }, [product]);
   return product.lineId ? (
     <div className="product-detail">
       <div className="product-detail-content">
@@ -86,7 +89,7 @@ function ProductDetail() {
           </div>
           <div className="quantity">
             <p>Quantity</p>
-            <AddToCart item={selectedOption} />
+            <AddToCart item={selectedOption} totalQty={totalAvailable} />
           </div>
           <div className="description-container">
             <h1>Description</h1>

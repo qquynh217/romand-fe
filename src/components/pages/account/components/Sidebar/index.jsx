@@ -27,14 +27,32 @@ function Sidebar() {
         </div>
       </div>
       <div className="account-menu">
+        <div
+          className={`account-menu-item ${
+            location.pathname.includes(ROUTE_URL.PROFILE) ||
+            location.pathname.includes(ROUTE_URL.ADDRESS)
+              ? "active"
+              : ""
+          }`}
+        >
+          <BiUser fontSize={20} className="icon" />
+          <p>My account</p>
+        </div>
         <NavLink
           to={ROUTE_URL.PROFILE}
           className={({ isActive }) =>
             `account-menu-item ${isActive ? "active" : ""}`
           }
         >
-          <BiUser fontSize={20} className="icon" />
           <p>Profile</p>
+        </NavLink>
+        <NavLink
+          to={ROUTE_URL.ADDRESS}
+          className={({ isActive }) =>
+            `account-menu-item ${isActive ? "active" : ""}`
+          }
+        >
+          <p>Addresses</p>
         </NavLink>
         <NavLink
           to={ROUTE_URL.CART}

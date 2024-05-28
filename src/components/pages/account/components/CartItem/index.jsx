@@ -1,9 +1,8 @@
-import { IoCloseCircleOutline } from "react-icons/io5";
-import { useAddToCart } from "components/pages/book-detail/hooks/useAddToCart";
-import { round } from "utils";
-import { useContext, useEffect, useState } from "react";
 import { CartContext } from "context/CartContext";
+import { useContext } from "react";
+import { IoCloseCircleOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
+import { round } from "utils";
 function CartItem({ item, order = false, qty, id }) {
   const { toggleCardItemQuantity, onRemove } = useContext(CartContext);
   const navigate = useNavigate();
