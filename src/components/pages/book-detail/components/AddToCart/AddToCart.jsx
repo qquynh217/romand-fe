@@ -1,9 +1,10 @@
-import { useContext } from "react";
-import { FaShoppingBag } from "react-icons/fa";
-import { CartContext } from "context/CartContext";
-import { useAddToCart } from "../../hooks/useAddToCart";
-import { Button, Space, notification } from "antd";
+import { Button, Space, Typography } from "antd";
 import showMessage from "components/Message";
+import { CartContext } from "context/CartContext";
+import { useContext } from "react";
+import { useAddToCart } from "../../hooks/useAddToCart";
+
+const { Text } = Typography;
 
 function AddToCart({ item, totalQty }) {
   const { value, increaseValue, decreaseValue, changeValue, onBlur } =
@@ -13,9 +14,10 @@ function AddToCart({ item, totalQty }) {
     if (item.id) {
       await onAdd(item, value);
     } else {
-      showMessage("warning", "You have to selected option");
+      showMessage("warning", "You have to select option");
     }
   };
+
   return (
     <div className="add-to-cart">
       <Space>
@@ -43,7 +45,18 @@ function AddToCart({ item, totalQty }) {
         </div>
         <p>{item.id ? item.quantity : totalQty} products available</p>
       </Space>
-      <Button type="primary" className="add-button" onClick={handleAddCart}>
+      <br />
+      {value > item.quantity && item.id && (
+        <Text type="danger">
+          Quantity selected is more than product available!
+        </Text>
+      )}
+      <Button
+        type="primary"
+        className="add-button"
+        onClick={handleAddCart}
+        disabled={value > item.quantity && item.id}
+      >
         <span>Add to cart</span>
       </Button>
     </div>

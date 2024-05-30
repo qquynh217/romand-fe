@@ -231,3 +231,52 @@ const expItem = {
   items_subtotal_price: 1790,
   cart_level_discount_applications: [],
 };
+export const shipping = [
+  {
+    id: 1,
+    name: "Free Ship",
+    value: 0,
+    description: "Guaranteed to receive within 5-7 days",
+  },
+  {
+    id: 2,
+    name: "Fast",
+    value: 5,
+    description: "Guaranteed to receive within 2-4 days",
+  },
+  {
+    id: 3,
+    name: "Express",
+    value: 10,
+    description: "Guaranteed to receive within 24 hours",
+  },
+];
+export const payment = [
+  {
+    value: "cash",
+    label: "Cash on Delivery",
+  },
+];
+
+export const voucher = [
+  {
+    id: 1,
+    name: "Sale 10%",
+    discountPercent: 0.1,
+    discountAmount: 0,
+    description: "Sale 10%",
+    startDate: undefined,
+    endDate: undefined,
+    quantity: -1,
+  },
+  {
+    id: 2,
+    name: "Sale 15%",
+    discountPercent: 0.15,
+    discountAmount: 0,
+    description: "Sale 15%",
+    startDate: undefined,
+    endDate: undefined,
+    quantity: -1,
+  },
+];

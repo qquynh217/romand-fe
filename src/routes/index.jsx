@@ -17,6 +17,7 @@ import CheckoutSuccess from "pages/checkout-success";
 import Pending from "pages/account/pending";
 import ProductDetail from "pages/product";
 import Address from "pages/account/address";
+import Checkout from "pages/checkout";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -34,8 +35,9 @@ export const ROUTE_URL = {
   CART: "/account/cart",
   ADMIN_BOOKS: "/admin/books",
   ADMIN_VIEW_BOOK: "/admin/book/:id",
-  CHECKOUT: "/checkout-success/:id",
+  CHECKOUT_SUCCESS: "/checkout-success/:id",
   ADDRESS: "/account/address",
+  CHECKOUT: "/checkout",
 };
 export const DEFAULT_PAGE = ROUTE_URL.HOME;
 
@@ -102,6 +104,10 @@ export const routes = [
           </Account>
         ),
       },
+      {
+        path: ROUTE_URL.CHECKOUT,
+        element: <Checkout />,
+      },
       { path: "*", element: <Navigate to={DEFAULT_PAGE} /> },
     ],
   },
@@ -127,7 +133,7 @@ export const routes = [
       },
     ],
   },
-  { path: ROUTE_URL.CHECKOUT, element: <CheckoutSuccess /> },
+  { path: ROUTE_URL.CHECKOUT_SUCCESS, element: <CheckoutSuccess /> },
 ];
 
 export const router = createBrowserRouter(routes);

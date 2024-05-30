@@ -4,7 +4,7 @@ import { IoCloseCircleOutline } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { round } from "utils";
 function CartItem({ item, order = false, qty, id }) {
-  const { toggleCardItemQuantity, onRemove } = useContext(CartContext);
+  const { onRemove } = useContext(CartContext);
   const navigate = useNavigate();
 
   return (
@@ -24,42 +24,28 @@ function CartItem({ item, order = false, qty, id }) {
           <h2 className="price">{round(item.price * qty, 2)} $</h2>
         </div>
         <p>#{item.optionName}</p>
-        {order ? (
-          <p className="quantity">Quantities: {qty}</p>
-        ) : (
-          <div className="bottom">
-            <div className="quantity-input">
-              <div
-                className="quantity-button minus"
-                onClick={() => {
-                  toggleCardItemQuantity(id, "dec");
-                }}
-              >
-                -
-              </div>
-              <div className="quantity-button">
-                <input type="number" value={qty} readOnly />
-              </div>
-              <div
-                className="quantity-button plus"
-                onClick={() => {
-                  toggleCardItemQuantity(id, "inc");
-                }}
-              >
-                +
-              </div>
-            </div>
-            <button
-              className="remove-item"
-              onClick={() => {
-                onRemove(item);
-              }}
-            >
-              <IoCloseCircleOutline />
-            </button>
-          </div>
-        )}
       </div>
+      {order ? (
+        <p className="quantity">Quantities: {qty}</p>
+      ) : (
+        <div className="bottom">
+          <div className="quantity-input">
+            <div className="quantity-button minus">-</div>
+            <div className="quantity-button">
+              <input type="number" value={qty} readOnly />
+            </div>
+            <div className="quantity-button plus">+</div>
+          </div>
+          <button
+            className="remove-item"
+            onClick={() => {
+              onRemove(item);
+            }}
+          >
+            <IoCloseCircleOutline />
+          </button>
+        </div>
+      )}
     </div>
   );
 }

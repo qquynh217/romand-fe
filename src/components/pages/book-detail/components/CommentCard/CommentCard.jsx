@@ -1,9 +1,6 @@
-import avatar from "resources/images/user-avatar.png";
 import { Avatar } from "antd";
-import { avatarList } from "constant";
-import { FaUser } from "react-icons/fa";
-import StarIcon from "resources/svg/Star";
 import Rate from "components/Rate";
+import { FaUser } from "react-icons/fa";
 function CommentCard({ item }) {
   return (
     <div className="comment-card">

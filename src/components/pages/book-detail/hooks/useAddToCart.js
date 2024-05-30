@@ -8,12 +8,10 @@ export const useAddToCart = (item) => {
   const decreaseValue = () => {
     if (value > 1) setValue((prev) => prev - 1);
   };
-  useEffect(() => {
-    if (item.quantity && item.quantity < value) setValue(1);
-  }, [value]);
+
   const changeValue = (e) => {
     const number = +e.target.value;
-    if (number > 0 && number <= item.quantity) {
+    if (number > 0) {
       setValue(number);
     } else {
       setValue("");

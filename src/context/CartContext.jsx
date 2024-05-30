@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useEffect, useState } from "react";
+import { createContext, useEffect, useState, useMemo } from "react";
 import { toast } from "react-hot-toast";
 import { cartService } from "services/cart";
 import { useAuthentication } from "store/useAuthentication";
@@ -8,27 +8,39 @@ export const CartContext = createContext();
 
 export const CartProvide = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
-  const [totalPrice, setTotalPrice] = useState(0);
-  const [totalQuantities, setTotalQuantities] = useState(0);
-  const [qty, setQty] = useState(1);
+  const [selectedItems, setSelectedItems] = useState([]);
   const user = useAuthentication();
-  let foundProduct;
-  let index;
+  // Tổng tiền sản phẩm đã chọn
+  const totalPrice = useMemo(() => {
+    const total = selectedItems.reduce((res, item) => {
+      return res + item.product.price * item.qty;
+    }, 0);
+    return total;
+  }, [selectedItems]);
+  // Tổng số lượng sản phẩm đã chọn
+  const totalQuantities = useMemo(() => {
+    const sumQty = selectedItems.reduce((res, item) => {
+      return res + item.qty;
+    }, 0);
+    return sumQty;
+  }, [selectedItems]);
+  const selectedItemsKey = useMemo(() => {
+    return selectedItems.map((item) => {
+      return item.key;
+    });
+  }, [selectedItems]);
 
+  useEffect(() => {
+    const items = cartItems.filter((item) =>
+      selectedItemsKey.includes(item.id)
+    );
+    console.log(items);
+    setSelectedItems(items);
+  }, [cartItems]);
   const fetchData = async (id) => {
     const res = await cartService.viewCart({ customer_id: id });
-
-    let sum = res.data.data.reduce(
-      (acc, item) => acc + item.product.price * item.qty,
-      0
-    );
-    let sumQuantity = res.data.data.reduce(
-      (acc, item) => acc + item.quantity,
-      0
-    );
-    setCartItems(res.data.data);
-    setTotalPrice(sum);
-    setTotalQuantities(sumQuantity);
+    const data = res.data.data.map((item) => ({ ...item, key: item.id }));
+    setCartItems(data);
   };
   useEffect(() => {
     if (user?.id) {
@@ -73,76 +85,46 @@ export const CartProvide = ({ children }) => {
       action: action,
     });
   };
-  const toggleCardItemQuantity = async (id, value) => {
-    foundProduct = cartItems.find((item) => item.id === id);
-    index = cartItems.findIndex((product) => product.id === id);
-    const newCartItems = cartItems.filter((item) => item.id !== id);
-    console.log(id, cartItems);
-    if (value === "inc") {
-      newCartItems.splice(index, 0, {
-        ...foundProduct,
-        quantity: foundProduct.qty + 1,
-      });
-      // await updateQuantity(id, 1);
-      setCartItems([...newCartItems]);
-      setTotalPrice((prev) => prev + foundProduct.product.price);
-      setTotalQuantities((prev) => prev + 1);
-    } else if (value === "dec") {
-      if (foundProduct.quantity > 1) {
-        newCartItems.splice(index, 0, {
-          ...foundProduct,
-          qty: foundProduct.qty - 1,
-        });
-        // await updateQuantity(id, 0);
-        setCartItems([...newCartItems]);
-        setTotalPrice((prev) => prev - foundProduct.product.price);
-        setTotalQuantities((prev) => prev - 1);
+  const toggleQuantity = async (id, status) => {
+    let isUpdate = 0;
+    const updateCartItem = cartItems.map((item) => {
+      let qty = item.qty;
+      if (item.id == id) {
+        if (status == "+") {
+          qty += 1;
+          isUpdate = 1;
+        } else if (status == "-" && qty > 1) {
+          qty -= 1;
+          isUpdate = 1;
+        }
       }
-    }
+      return { ...item, qty: qty };
+    });
+    if (isUpdate) setCartItems(updateCartItem);
   };
+
   const handleCheckout = () => {
     // const orderid = crypto.randomUUID();
     // window.location.href = `/checkout-success/${orderid}`;
-    axios
-      .post("http://localhost:4242/create-checkout", cartItems)
-      .then((res) => {
-        if (res.data.url) {
-          window.location.href = res.data.url;
-        }
-      })
-      .catch((err) => {
-        console.log("err", err);
-      });
   };
 
-  const handleCheckoutSuccess = async (id) => {
-    const user = JSON.parse(localStorage.getItem("bookory-user"));
-    await axios
-      .post("http://localhost:8080/api/cart/buy", {
-        orderid: id,
-        userid: user.id,
-      })
-      .then((res) => {
-        fetchData(user.id);
-        // console.log(res.data);
-      });
-  };
+  const handleCheckoutSuccess = async (id) => {};
   return (
     <CartContext.Provider
       value={{
         cartItems,
-        totalPrice,
-        totalQuantities,
-        qty,
         setCartItems,
-        setTotalPrice,
-        setTotalQuantities,
         onAdd,
-        toggleCardItemQuantity,
         onRemove,
         fetchData,
         handleCheckout,
         handleCheckoutSuccess,
+        selectedItems,
+        setSelectedItems,
+        totalPrice,
+        totalQuantities,
+        selectedItemsKey,
+        toggleQuantity,
       }}
     >
       {children}

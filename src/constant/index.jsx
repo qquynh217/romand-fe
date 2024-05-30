@@ -28,4 +28,8 @@ export const REGEX_EMAIL =
 export const REGEX_PHONE =
   /^[\+]?[(]?[0-9]{3}[)]?[-\s\.]?[0-9]{3}[-\s\.]?[0-9]{4,6}$/im;
 
-export const avatarList = [ava1, ava2, ava3, ava4, ava5, ava6];
+export const ADDRESS_TAG_COLOR = {
+  Home: "blue",
+  Office: "purple",
+  Other: "volcano",
+};

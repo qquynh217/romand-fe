@@ -1,12 +1,11 @@
 import { Avatar } from "antd";
-import { avatarList } from "constant";
 import { BiUser } from "react-icons/bi";
 import {
+  IoCartOutline,
+  IoChatbubbleEllipsesOutline,
+  IoExitOutline,
   IoReaderOutline,
   IoTrashBinOutline,
-  IoCartOutline,
-  IoExitOutline,
-  IoChatbubbleEllipsesOutline,
 } from "react-icons/io5";
 import { NavLink, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
@@ -43,6 +42,7 @@ function Sidebar() {
           className={({ isActive }) =>
             `account-menu-item ${isActive ? "active" : ""}`
           }
+          style={{ marginLeft: 25 }}
         >
           <p>Profile</p>
         </NavLink>
@@ -51,6 +51,7 @@ function Sidebar() {
           className={({ isActive }) =>
             `account-menu-item ${isActive ? "active" : ""}`
           }
+          style={{ marginLeft: 25 }}
         >
           <p>Addresses</p>
         </NavLink>
@@ -70,7 +71,7 @@ function Sidebar() {
           }
         >
           <IoChatbubbleEllipsesOutline fontSize={20} className="icon" />
-          <p>Pending</p>
+          <p>Processing</p>
         </NavLink>
         <NavLink
           to={ROUTE_URL.PURCHASE}

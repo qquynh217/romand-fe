@@ -1,10 +1,9 @@
-import axios from "axios";
-import { API_URL } from "../axios";
+import { API_URL, axiosCus } from "../axios";
 
 class CartService {
   baseUrl = API_URL + "/cart";
   addToCart({ customer_id, product_id, qty, totalPrice }) {
-    return axios.post(this.baseUrl + "/addProductToCart", {
+    return axiosCus.post(this.baseUrl + "/addProductToCart", {
       customer_id,
       product_id,
       qty,
@@ -12,7 +11,31 @@ class CartService {
     });
   }
   viewCart({ customer_id }) {
-    return axios.post(this.baseUrl + "/viewCart", { customer_id });
+    return axiosCus.post(this.baseUrl + "/viewCart", { customer_id });
+  }
+  listAddress({ customer_id }) {
+    return axiosCus.post(this.baseUrl + "/listAddress", { customer_id });
+  }
+  addAddress({ customer_id, name, address, phone, type }) {
+    return axiosCus.post(this.baseUrl + "/addAddress", {
+      customer_id,
+      name,
+      address,
+      phone,
+      type,
+    });
+  }
+  editAddress({ address_id, name, address, phone, type }) {
+    return axiosCus.post(this.baseUrl + "/editAddress", {
+      address_id,
+      name,
+      address,
+      phone,
+      type,
+    });
+  }
+  deleteAddress({ address_id }) {
+    return axiosCus.post(this.baseUrl + "/deleteAddress", { address_id });
   }
 }
 
