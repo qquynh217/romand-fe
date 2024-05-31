@@ -10,26 +10,35 @@ import "./styles/_app.scss";
 import { userService } from "./services/user";
 
 function App() {
-  const { login } = useAuthentication();
+  const { login, logout } = useAuthentication();
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("ROMAND_USER"));
 
     if (user.state.isLogin) {
-      userService.getUser({ username: user.state.username }).then((res) => {
-        const user = {
-          email: res.data.data.email || "",
-          username: res.data.data.username || "",
-          id: res.data.data.id || "",
-          role: res.data.data.role || "",
-          avatar: res.data.data.avatar || "",
-          phone: res.data.data.phone || "",
-          fullName: res.data.data.name || "",
-          gender: res.data.data.gender || "",
-          dob: res.data.data.dob || "",
-        };
+      try {
+        userService
+          .getUser({ username: user.state.username })
+          .then((res) => {
+            const user = {
+              email: res.data.data.email || "",
+              username: res.data.data.username || "",
+              id: res.data.data.id || "",
+              role: res.data.data.role || "",
+              avatar: res.data.data.avatar || "",
+              phone: res.data.data.phone || "",
+              fullName: res.data.data.name || "",
+              gender: res.data.data.gender || "",
+              dob: res.data.data.dob || "",
+            };
 
-        login(user);
-      });
+            login(user);
+          })
+          .catch(() => {
+            logout();
+          });
+      } catch (error) {
+        logout();
+      }
     }
   }, []);
 

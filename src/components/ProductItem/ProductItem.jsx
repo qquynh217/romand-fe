@@ -47,13 +47,13 @@ function ProductItem({ className = "", noFlex = false, item }) {
               <div className="product-options_slide">
                 {item.options.map((item) => (
                   <div className="product-options_item" key={item.id}>
-                    <img src={item.featured_image} alt="" />
+                    <img src={item.featureImage} alt="" />
                   </div>
                 ))}
               </div>
             </div>
           </div>
-          <p className="price">${round(item?.default_price, 2)} USD</p>
+          <p className="price">${round(item?.defaultPrice, 2)} USD</p>
         </div>
       </div>
     </div>

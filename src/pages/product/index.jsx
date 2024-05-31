@@ -21,7 +21,7 @@ function ProductDetail() {
     name: "",
     price: "",
     quantity: "",
-    featured_image: "",
+    featureImage: "",
     image: "",
   });
   useEffect(() => {
@@ -32,6 +32,7 @@ function ProductDetail() {
           const data = res.data.data;
           const options = data.options.map((item) => ({
             ...item,
+            name: item.optionName,
           }));
           setProduct({ ...data, options });
         }
@@ -61,7 +62,7 @@ function ProductDetail() {
         </div>
         <div className="product-detail-information">
           <h1 className="title">{product.name}</h1>
-          <h2 className="price">${round(product.default_price, 2)} USD</h2>
+          <h2 className="price">${round(product.defaultPrice, 2)} USD</h2>
           <div className="rate" style={{ display: "flex", gap: 20 }}>
             <Rate value={product?.rate} />
             <span className="ant-rate-text">{product?.rate}</span>
@@ -69,7 +70,7 @@ function ProductDetail() {
           <Divider />
           <div className="product-options">
             <p className="product-options_name">
-              <b>{product.variantName}</b>: {selectedOption.name}
+              <b>{product.options[0].variantName}</b>: {selectedOption.name}
             </p>
             <div className="product-options_items">
               {product.options.map((item) => (
@@ -82,7 +83,7 @@ function ProductDetail() {
                     setSelectedOption(item);
                   }}
                 >
-                  <img src={item.featured_image} alt="" />
+                  <img src={item.featureImage} alt="" />
                 </div>
               ))}
             </div>

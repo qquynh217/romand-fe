@@ -22,7 +22,7 @@ function Header() {
   useEffect(() => {
     window.addEventListener("scroll", isSticky);
     productService.getCategory().then((res) => {
-      const data = res.map((item) => ({ ...item, key: item.name }));
+      const data = res.map((item) => ({ ...item, key: item.id }));
       setCategory(data);
     });
     return () => {

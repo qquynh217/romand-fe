@@ -1,10 +1,14 @@
-import { Button, Input, Space, Table } from "antd";
+import { Button, Input, Popconfirm, Space, Table, Typography } from "antd";
 import { CartContext } from "context/CartContext";
 import { useContext, useEffect } from "react";
 import NumberFormat from "components/NumberFormat";
 import { useAuthentication } from "store/useAuthentication";
 import { useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
+import { cartService } from "services/cart";
+import showMessage from "components/Message";
+
+const { Text } = Typography;
 
 function Cart() {
   const {
@@ -19,6 +23,17 @@ function Cart() {
   } = useContext(CartContext);
   const navigate = useNavigate();
   const { id } = useAuthentication();
+  const handleDelete = async (id) => {
+    try {
+      const res = await cartService.deleteCart({ id });
+      if (res.status == 200) {
+        showMessage("success", "Delete Items successful!");
+        fetchData();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   const column = [
     {
       title: "Product",
@@ -49,23 +64,27 @@ function Cart() {
       width: 115,
       align: "center",
       render: (val, rec) => (
-        <Space className="product-qty-input">
-          <Button
-            onClick={() => {
-              toggleQuantity(rec.id, "-");
-            }}
-          >
-            -
-          </Button>
-          <Input value={val} />
-          <Button
-            onClick={() => {
-              toggleQuantity(rec.id, "+");
-            }}
-          >
-            +
-          </Button>
-        </Space>
+        <div>
+          <Space className="product-qty-input">
+            <Button
+              onClick={() => {
+                toggleQuantity(rec.id, "-");
+              }}
+            >
+              -
+            </Button>
+            <Input value={val} />
+            <Button
+              onClick={() => {
+                toggleQuantity(rec.id, "+");
+              }}
+            >
+              +
+            </Button>
+          </Space>
+
+          <Text type="danger">{rec.product.quantity} items left</Text>
+        </div>
       ),
     },
     {
@@ -86,9 +105,19 @@ function Cart() {
       align: "center",
       width: 100,
       render: (val) => (
-        <Button type="link" danger>
-          Delete
-        </Button>
+        <Popconfirm
+          title="Delete item?"
+          description="Are you sure to delete this item?"
+          onConfirm={() => {
+            handleDelete(val);
+          }}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="link" danger>
+            Delete
+          </Button>
+        </Popconfirm>
       ),
     },
   ];
@@ -98,6 +127,13 @@ function Cart() {
   const rowSelection = {
     onChange: (_selectedRowKeys, selectedRows) => {
       setSelectedItems(selectedRows);
+    },
+    getCheckboxProps: (record) => {
+      const item = cartItems.find((el) => el.id == record.id);
+      return {
+        disabled: record.product.quantity < item.qty,
+        // Column configuration not to be checked
+      };
     },
   };
 
@@ -131,6 +167,7 @@ function Cart() {
           onClick={() => {
             navigate(ROUTE_URL.CHECKOUT);
           }}
+          disabled={selectedItemsKey.length <= 0}
         >
           <span>Check out</span>
         </button>

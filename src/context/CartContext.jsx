@@ -1,7 +1,7 @@
 import axios from "axios";
 import { createContext, useEffect, useState, useMemo } from "react";
-import { toast } from "react-hot-toast";
 import { cartService } from "services/cart";
+import showMessage from "components/Message";
 import { useAuthentication } from "store/useAuthentication";
 
 export const CartContext = createContext();
@@ -34,7 +34,7 @@ export const CartProvide = ({ children }) => {
     const items = cartItems.filter((item) =>
       selectedItemsKey.includes(item.id)
     );
-    console.log(items);
+
     setSelectedItems(items);
   }, [cartItems]);
   const fetchData = async (id) => {
@@ -58,12 +58,12 @@ export const CartProvide = ({ children }) => {
       if (res.status == 200) {
         console.log(product);
         await fetchData(user.id);
-        toast.success(`${quantity} ${product.name} added to the cart`);
+        showMessage("success", `${quantity} ${product.name} added to the cart`);
       } else {
-        toast.error("Add to cart failed!");
+        showMessage("error", "Add to cart failed!");
       }
     } else {
-      toast.error("Please login to add to cart !");
+      showMessage("error", "Please login to add to cart !");
     }
   };
 
@@ -72,11 +72,11 @@ export const CartProvide = ({ children }) => {
     const res = await axios.post("http://localhost:8080/api/cart/delete", {
       id: product.id,
     });
-    console.log(res);
+
     if (res.data == "200") {
       fetchData(user.id);
     } else {
-      toast.error("Delete not success !");
+      showMessage("error", "Delete not success !");
     }
   };
   const updateQuantity = async (id, action) => {
@@ -90,7 +90,7 @@ export const CartProvide = ({ children }) => {
     const updateCartItem = cartItems.map((item) => {
       let qty = item.qty;
       if (item.id == id) {
-        if (status == "+") {
+        if (status == "+" && item.product.quantity > item.qty) {
           qty += 1;
           isUpdate = 1;
         } else if (status == "-" && qty > 1) {
