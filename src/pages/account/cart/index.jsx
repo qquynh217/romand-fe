@@ -131,7 +131,7 @@ function Cart() {
     getCheckboxProps: (record) => {
       const item = cartItems.find((el) => el.id == record.id);
       return {
-        disabled: record.product.quantity < item.qty,
+        disabled: record.product?.quantity < item.qty,
         // Column configuration not to be checked
       };
     },

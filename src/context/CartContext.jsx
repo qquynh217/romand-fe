@@ -85,21 +85,32 @@ export const CartProvide = ({ children }) => {
       action: action,
     });
   };
+  const updateCart = async (id, qty) => {
+    try {
+      const res = cartService.updateCart({ id, qty });
+    } catch (error) {
+      showMessage("Update Cart Error!");
+    }
+  };
   const toggleQuantity = async (id, status) => {
     let isUpdate = 0;
+
     const updateCartItem = cartItems.map((item) => {
       let qty = item.qty;
       if (item.id == id) {
         if (status == "+" && item.product.quantity > item.qty) {
           qty += 1;
           isUpdate = 1;
+          updateCart(item.id, item.qty + 1);
         } else if (status == "-" && qty > 1) {
           qty -= 1;
           isUpdate = 1;
+          updateCart(item.id, item.qty + 1);
         }
       }
       return { ...item, qty: qty };
     });
+
     if (isUpdate) setCartItems(updateCartItem);
   };
 

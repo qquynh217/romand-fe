@@ -16,6 +16,9 @@ class CartService {
   deleteCart({ id }) {
     return axiosCus.post(this.baseUrl + "/deleteCart", { id });
   }
+  updateCart({ id, qty }) {
+    return axiosCus.post(this.baseUrl + "/updateCart", { id, qty });
+  }
   listAddress({ customer_id }) {
     return axiosCus.post(this.baseUrl + "/listAddress", { customer_id });
   }
