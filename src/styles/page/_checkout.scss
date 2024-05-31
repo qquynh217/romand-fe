@@ -86,6 +86,7 @@ $bg-color: ghostwhite;
         padding: 8px 10px;
         border: 2px solid gainsboro;
         border-radius: 8px;
+        min-width: 220px;
         .desc {
           font-size: 13px;
           color: #26aa99;
@@ -148,7 +149,8 @@ $bg-color: ghostwhite;
       }
       &-value {
         text-align: end;
-        h2 {
+        h2,
+        h2 * {
           font-size: 24px;
           color: var(--primary-color);
         }

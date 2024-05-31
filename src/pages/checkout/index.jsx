@@ -17,10 +17,10 @@ import { CartContext } from "context/CartContext";
 import { initAddress } from "../account/address";
 import NumberFormat from "components/NumberFormat";
 import { BsTicketPerforated } from "react-icons/bs";
-import { shipping } from "constant/fakeData";
 import { FaShippingFast } from "react-icons/fa";
 import { payment } from "constant/fakeData";
 import { voucher } from "constant/fakeData";
+import { useCheckOut } from "hooks/useCheckOut";
 
 function Checkout() {
   const [address, setAddress] = useState(initAddress);
@@ -28,6 +28,8 @@ function Checkout() {
     shippingValue: 0,
     voucher: 0,
   });
+  const { shipping } = useCheckOut();
+  console.log(shipping);
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const { id } = useAuthentication();
@@ -200,7 +202,11 @@ function Checkout() {
         <div className="payment">
           <div className="payment-method">
             <h2>Payment method</h2>
-            <Select options={payment} style={{ width: "300px" }}></Select>
+            <Select
+              options={payment}
+              style={{ width: "300px" }}
+              defaultValue={"cash"}
+            ></Select>
           </div>
           <div className="total">
             <Row>
@@ -218,7 +224,12 @@ function Checkout() {
                   <p>${totalPrice}</p>
                   <p>${info.shippingValue}</p>
                   <p>-${info.voucher}</p>
-                  <h2>${totalPrice + info.shippingValue - info.voucher}</h2>
+                  <h2>
+                    $
+                    <NumberFormat
+                      value={totalPrice + info.shippingValue - info.voucher}
+                    />
+                  </h2>
                 </div>
               </Col>
             </Row>
