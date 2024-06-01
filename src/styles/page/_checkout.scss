@@ -64,7 +64,8 @@ $bg-color: ghostwhite;
         font-size: 16px;
         color: var(--light);
       }
-      b {
+      b,
+      b * {
         color: var(--primary-color);
         font-size: 20px;
       }

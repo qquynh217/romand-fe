@@ -17,10 +17,12 @@ import { CartContext } from "context/CartContext";
 import { initAddress } from "../account/address";
 import NumberFormat from "components/NumberFormat";
 import { BsTicketPerforated } from "react-icons/bs";
-import { FaShippingFast } from "react-icons/fa";
+import { FaShippingFast, FaTicketAlt } from "react-icons/fa";
 import { payment } from "constant/fakeData";
-import { voucher } from "constant/fakeData";
 import { useCheckOut } from "hooks/useCheckOut";
+import { orderService } from "services/checkout";
+import { useNavigate } from "react-router-dom";
+import showMessage from "components/Message";
 
 function Checkout() {
   const [address, setAddress] = useState(initAddress);
@@ -28,8 +30,9 @@ function Checkout() {
     shippingValue: 0,
     voucher: 0,
   });
-  const { shipping } = useCheckOut();
-  console.log(shipping);
+  const navigate = useNavigate();
+  const { shipping, voucher } = useCheckOut();
+
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const { id } = useAuthentication();
@@ -44,13 +47,25 @@ function Checkout() {
     }
   };
 
-  const handleSubmit = (value) => {
+  const handleSubmit = async (value) => {
     const data = {
       ...value,
       addressId: address.id,
       products: selectedItems,
+      totalPrice: totalPrice + info.shippingValue - info.voucher,
     };
     console.log(data);
+    try {
+      const res = await orderService.createOrder(data);
+      if (res.data.statusCode == 200) {
+        navigate(`/checkout-success/${res.data.data.orderId}`);
+      } else {
+        showMessage("error", "Place order failed!");
+      }
+    } catch (error) {
+      console.log(error);
+      showMessage("error", "Place order failed!");
+    }
   };
 
   useEffect(() => {
@@ -134,7 +149,9 @@ function Checkout() {
           />
           <Space className="total">
             <p>Order Total ({totalQuantities} items):</p>
-            <b>${totalPrice}</b>
+            <b>
+              $<NumberFormat value={totalPrice} />
+            </b>
           </Space>
         </div>
         <div className="shipping-voucher">
@@ -182,7 +199,15 @@ function Checkout() {
                   style={{ width: "300px" }}
                   options={voucher.map((item) => ({
                     value: item.id,
-                    label: item.name,
+                    label: (
+                      <div className="voucher-item">
+                        <div className="d-flex align-items-center gap-10">
+                          <BsTicketPerforated />
+                          <p>{item.name}</p>
+                        </div>
+                        <span>{item.description}</span>
+                      </div>
+                    ),
                   }))}
                   onChange={(e) => {
                     console.log(e);
@@ -221,7 +246,9 @@ function Checkout() {
               </Col>
               <Col span={3}>
                 <div className="total-value">
-                  <p>${totalPrice}</p>
+                  <p>
+                    $<NumberFormat value={totalPrice} />
+                  </p>
                   <p>${info.shippingValue}</p>
                   <p>-${info.voucher}</p>
                   <h2>
