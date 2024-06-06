@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { orderService } from "services/checkout";
+import { orderService } from "services/order";
 import { useAuthentication } from "store/useAuthentication";
 
 export const useCheckOut = () => {

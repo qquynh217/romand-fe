@@ -1,4 +1,4 @@
-import banner from "resources/images/banner-pc.webp";
+import banner from "resources/images/banner-pc-1.webp";
 
 function Banner() {
   return (

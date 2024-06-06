@@ -20,7 +20,7 @@ import { BsTicketPerforated } from "react-icons/bs";
 import { FaShippingFast, FaTicketAlt } from "react-icons/fa";
 import { payment } from "constant/fakeData";
 import { useCheckOut } from "hooks/useCheckOut";
-import { orderService } from "services/checkout";
+import { orderService } from "services/order";
 import { useNavigate } from "react-router-dom";
 import showMessage from "components/Message";
 

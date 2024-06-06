@@ -7,7 +7,7 @@ import ContactPage from "pages/contact";
 import AboutPage from "pages/about";
 import Account from "pages/layout/Account";
 import Profile from "pages/account/profile";
-import Purchase from "pages/account/purchase";
+import MyPurchase from "pages/account/my-purchase";
 import Canceled from "pages/account/canceled";
 import AdminLayout from "pages/layout/Admin";
 import AllBook from "pages/admin/books";
@@ -76,7 +76,7 @@ export const routes = [
         path: ROUTE_URL.PURCHASE,
         element: (
           <Account>
-            <Purchase />
+            <MyPurchase />
           </Account>
         ),
       },

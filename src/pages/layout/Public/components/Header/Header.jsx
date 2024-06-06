@@ -47,7 +47,7 @@ function Header() {
     },
     {
       key: 2,
-      label: <p>My Purchase</p>,
+      label: <Link to={ROUTE_URL.PURCHASE}>My Purchase</Link>,
     },
     {
       key: 3,

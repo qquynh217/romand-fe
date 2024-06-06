@@ -1,5 +1,5 @@
 import axios from "axios";
-import { API_URL } from "../axios";
+import { API_URL, axiosCus } from "../axios";
 
 class ProductService {
   baseUrl = API_URL + "/product";
@@ -22,6 +22,21 @@ class ProductService {
   searchProduct = async ({ name }) => {
     const res = await axios.post(this.baseUrl + "/searchProduct", { name });
     return res.data.data || [];
+  };
+  sendFeedback = async ({
+    customer_id,
+    product_id,
+    content,
+    rate,
+    headline,
+  }) => {
+    return await axiosCus.post(this.baseUrl + "/sendFeedback", {
+      customer_id,
+      product_id,
+      content,
+      rate,
+      headline,
+    });
   };
 }
 

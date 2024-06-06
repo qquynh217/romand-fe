@@ -1,8 +1,6 @@
-import { useContext, useEffect, useState } from "react";
 import { BsBagCheckFill } from "react-icons/bs";
 import { Link, useParams } from "react-router-dom";
-import Logo from "resources/svg/Logo";
-import { CartContext } from "context/CartContext";
+import logo from "resources/images/logo-text.avif";
 import Footer from "../layout/Public/components/Footer/Footer";
 
 function CheckoutSuccess() {
@@ -11,11 +9,11 @@ function CheckoutSuccess() {
   return (
     <div className="success-wrapper">
       <Link to="/" className="logo">
-        <Logo />
+        <img src={logo} alt="" />
       </Link>
       <div className="success">
         <p className="icon">
-          <BsBagCheckFill />
+          <BsBagCheckFill size={80} />
         </p>
         <h2>Thank you for your order!</h2>
         <p className="email-msg">Your order ID is: {id}</p>

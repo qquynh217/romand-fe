@@ -1,32 +1,83 @@
-import { Rate } from "antd";
+import { Button, Form, Input, Modal, Rate, Spin } from "antd";
 import { useState } from "react";
 import { useAuthentication } from "store/useAuthentication";
 import { useReviewForm } from "../../hooks/useReviewForm";
+import { productService } from "services/product";
+import showMessage from "components/Message";
 
-function ReviewForm({ bookid }) {
-  const { register, handleSubmit, errors, onSubmit, setStars } =
-    useReviewForm(bookid);
-  const { user } = useAuthentication();
+function ReviewForm({ open, setOpen, fetchData }) {
+  const { id } = useAuthentication();
+  const [loading, setLoading] = useState(false);
+  const handleCloseModal = () => {
+    setOpen("");
+  };
+  1;
+  const handleSubmit = async (value) => {
+    const reqData = {
+      ...value,
+      customer_id: id,
+      product_id: open,
+    };
+    setLoading(true);
+    try {
+      const res = await productService.sendFeedback(reqData);
+      if (res.status == 200) {
+        fetchData && (await fetchData());
+        handleCloseModal();
+      }
+    } catch (error) {
+      console.log(error);
+      showMessage("error", "Send Review Error!");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
-    <form className="review-form" onSubmit={handleSubmit(onSubmit)}>
-      <div className="rate">
-        <span>Your rating*</span>
-        <Rate
-          allowClear={false}
-          allowHalf
-          defaultValue={5}
-          style={{ fontSize: 16 }}
-          onChange={setStars}
-        />
-      </div>
-      <textarea
-        {...register("review")}
-        className="input-item white"
-        placeholder="Your review*"
-      ></textarea>
-      {errors.review && <p className="error-text">{errors.review?.message}</p>}
-      {user.isLogin && <button className="app-button mg-10">Submit</button>}
-    </form>
+    <Modal
+      open={open != ""}
+      onCancel={handleCloseModal}
+      footer={null}
+      destroyOnClose={true}
+      maskClosable={false}
+      width={600}
+      className="review-form-modal"
+    >
+      <h2 className="title">Share your thoughts</h2>
+      <Form onFinish={handleSubmit} layout="vertical">
+        <Form.Item
+          name="rate"
+          label="Rate your experience"
+          rules={[{ required: true, message: "A star rating is required" }]}
+        >
+          <Rate />
+        </Form.Item>
+        <Form.Item
+          name="content"
+          label="Write a review"
+          rules={[{ required: true, message: "Review content is required" }]}
+        >
+          <Input.TextArea
+            placeholder="Tell us what you like or dislike"
+            cols={72}
+            rows={5}
+            maxLength={500}
+            showCount
+          />
+        </Form.Item>
+        <Form.Item name="headline" label="Add a headline ">
+          <Input placeholder="Summarize your experience" />
+        </Form.Item>
+        <div className="button-submit">
+          {loading ? (
+            <Spin size="large" />
+          ) : (
+            <Button type="primary" htmlType="submit">
+              Send
+            </Button>
+          )}
+        </div>
+      </Form>
+    </Modal>
   );
 }
 

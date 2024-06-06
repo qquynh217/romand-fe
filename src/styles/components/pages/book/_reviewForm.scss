@@ -1,12 +1,24 @@
-.review-form {
-  .rate {
+.review-form-modal {
+  * {
     font-size: 16px;
-    display: flex;
-    gap: 15px;
-    align-items: center;
-    margin: 0 0 15px 5px;
   }
-  textarea {
-    min-height: 180px;
+  .title {
+    font-size: 18px;
+    text-align: center;
+    margin: 20px;
+  }
+  .ant-form-item-label label {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  .button-submit {
+    display: flex;
+    justify-content: center;
+    button {
+      width: 150px;
+    }
+  }
+  .ant-form-item {
+    margin-bottom: 40px;
   }
 }

@@ -1,4 +1,4 @@
-import { Avatar } from "antd";
+import { Avatar, Space } from "antd";
 import Rate from "components/Rate";
 import { FaUser } from "react-icons/fa";
 function CommentCard({ item }) {
@@ -14,7 +14,10 @@ function CommentCard({ item }) {
       </div>
       <div className="comment-info">
         <div className="rate-date">
-          <Rate value={item.rate} />
+          <Space>
+            <Rate value={item.rate} />
+            <b style={{ fontSize: 17 }}>{item.headline}</b>
+          </Space>
           <span className="date">
             {new Date(item.createdAt).toLocaleString()}
           </span>

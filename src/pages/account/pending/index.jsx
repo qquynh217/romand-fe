@@ -9,11 +9,8 @@ function Pending() {
   const [cancelled, setCancelled] = useState([]);
   useEffect(() => {
     const fetchData = async () => {
-      await axios
-        .get(`http://localhost:8080/api/order/pending/${user.id}`)
-        .then((res) => {
-          setCancelled(res.data);
-        });
+      try {
+      } catch (error) {}
     };
     if (user.id) {
       fetchData();
@@ -21,7 +18,7 @@ function Pending() {
   }, [user.id]);
   return (
     <div className="purchase">
-      <h1>Pending</h1>
+      <h1>Processing</h1>
       <div className="purchase-container">
         {cancelled.length > 0 ? (
           cancelled.map((item, id) => {

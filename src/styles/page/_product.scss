@@ -32,12 +32,11 @@
         width: 30%;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 15px;
-        margin-left: 10px;
-        padding-right: 50px;
         padding-top: 12px;
         border-right: 1px solid #e3e3e3;
-        h2 {
+        h2 * {
           font-size: 48px;
           color: #e7731bd1;
         }
@@ -46,12 +45,13 @@
         }
       }
       .star-distribution {
-        width: 30%;
+        width: 40%;
         display: flex;
         flex-direction: column-reverse;
-        padding-inline-end: 43px;
+        padding: 0 43px;
         padding-top: 3px;
-        padding-left: 35px;
+        border-right: 1px solid #e3e3e3;
+
         &-row {
           display: flex;
           align-items: center;
@@ -68,6 +68,12 @@
             margin: 0 25px 0 20px;
           }
         }
+      }
+      .rate-new-review-btn {
+        width: 30%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
     }
     .comment-list {

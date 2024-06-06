@@ -5,12 +5,6 @@ import {
   FaCodepen,
   FaFeatherAlt,
 } from "react-icons/fa";
-import ava1 from "resources/images/avatar/ava1.png";
-import ava2 from "resources/images/avatar/ava2.png";
-import ava3 from "resources/images/avatar/ava3.png";
-import ava4 from "resources/images/avatar/ava4.png";
-import ava5 from "resources/images/avatar/ava5.png";
-import ava6 from "resources/images/avatar/ava6.png";
 
 export const DATE_FORMAT = "YYYY-MM-DD";
 export const USER_DETAIL = "ROMAND_USER";
@@ -33,3 +27,26 @@ export const ADDRESS_TAG_COLOR = {
   Office: "purple",
   Other: "volcano",
 };
+
+export const ORDER_STATUS = [
+  {
+    id: 0,
+    value: "All",
+  },
+  {
+    id: 1,
+    value: "Processing",
+  },
+  {
+    id: 2,
+    value: "Delivering",
+  },
+  {
+    id: 3,
+    value: "Completed",
+  },
+  {
+    id: 4,
+    value: "Cancelled",
+  },
+];

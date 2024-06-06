@@ -64,15 +64,7 @@ function Sidebar() {
           <IoCartOutline fontSize={20} className="icon" />
           <p>Cart</p>
         </NavLink>
-        <NavLink
-          to={ROUTE_URL.PENDING}
-          className={({ isActive }) =>
-            `account-menu-item ${isActive ? "active" : ""}`
-          }
-        >
-          <IoChatbubbleEllipsesOutline fontSize={20} className="icon" />
-          <p>Processing</p>
-        </NavLink>
+
         <NavLink
           to={ROUTE_URL.PURCHASE}
           className={({ isActive }) =>
@@ -80,17 +72,9 @@ function Sidebar() {
           }
         >
           <IoReaderOutline fontSize={20} className="icon" />
-          <p>Purchased</p>
+          <p>My Purchase</p>
         </NavLink>
-        <NavLink
-          to={ROUTE_URL.CANCEL}
-          className={({ isActive }) =>
-            `account-menu-item ${isActive ? "active" : ""}`
-          }
-        >
-          <IoTrashBinOutline fontSize={20} className="icon" />
-          <p>Cancelled</p>
-        </NavLink>
+
         <div
           className="account-menu-item"
           onClick={() => {

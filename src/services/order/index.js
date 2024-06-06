@@ -12,6 +12,18 @@ class OrderService {
   createOrder(params) {
     return axiosCus.post(this.baseUrl + "/createOrder", params);
   }
+  getListOrder({ customerId, status }) {
+    return axiosCus.post(this.baseUrl + "/getListOrderByCustomer", {
+      customerId,
+      status,
+    });
+  }
+  updateOrderStatus({ orderId, status }) {
+    return axiosCus.post(this.baseUrl + "/updateOrderStatus", {
+      orderId,
+      status,
+    });
+  }
 }
 
 export const orderService = new OrderService();
