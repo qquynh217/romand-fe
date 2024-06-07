@@ -32,21 +32,26 @@ export const ORDER_STATUS = [
   {
     id: 0,
     value: "All",
+    desc: "",
   },
   {
     id: 1,
     value: "Processing",
+    desc: "Order is processed",
   },
   {
     id: 2,
     value: "Delivering",
+    desc: "Your order is on the way",
   },
   {
     id: 3,
     value: "Completed",
+    desc: "Order completed",
   },
   {
     id: 4,
     value: "Cancelled",
+    desc: "Order canceled",
   },
 ];

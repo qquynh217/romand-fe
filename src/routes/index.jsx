@@ -18,6 +18,7 @@ import Pending from "pages/account/pending";
 import ProductDetail from "pages/product";
 import Address from "pages/account/address";
 import Checkout from "pages/checkout";
+import Order from "pages/account/order";
 
 export const ROUTE_URL = {
   HOME: "/",
@@ -38,6 +39,7 @@ export const ROUTE_URL = {
   CHECKOUT_SUCCESS: "/checkout-success/:id",
   ADDRESS: "/account/address",
   CHECKOUT: "/checkout",
+  ORDER: "/account/purchase/order/:id",
 };
 export const DEFAULT_PAGE = ROUTE_URL.HOME;
 
@@ -101,6 +103,14 @@ export const routes = [
         element: (
           <Account>
             <Cart />
+          </Account>
+        ),
+      },
+      {
+        path: ROUTE_URL.ORDER,
+        element: (
+          <Account>
+            <Order />
           </Account>
         ),
       },

@@ -24,6 +24,9 @@ class OrderService {
       status,
     });
   }
+  getOrder({ orderId }) {
+    return axiosCus.post(this.baseUrl + "/getOrder", { orderId });
+  }
 }
 
 export const orderService = new OrderService();

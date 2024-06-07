@@ -4,8 +4,11 @@ import dayjs from "dayjs";
 import { orderService } from "services/order";
 import { ORDER_STATUS } from "constant";
 import showMessage from "../Message";
+import { useNavigate } from "react-router-dom";
+import { ROUTE_URL } from "routes";
 
 const OrderItem = ({ order, fetchData }) => {
+  const navigate = useNavigate();
   const column = [
     {
       title: "No",
@@ -74,7 +77,12 @@ const OrderItem = ({ order, fetchData }) => {
   return (
     <div className="purchase-order-item">
       <div className="order-header">
-        <Space>
+        <Space
+          style={{ cursor: "pointer" }}
+          onClick={() => {
+            navigate(ROUTE_URL.PURCHASE + "/order/" + order.id);
+          }}
+        >
           <p>Order ID:</p>
           <b>{order.id}</b>
         </Space>

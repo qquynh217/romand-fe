@@ -1,7 +1,7 @@
 .account-page {
   width: 100%;
   background-color: #f5f5f5;
-  min-height: calc(100vh - 289px);
+  min-height: calc(100vh - 250px);
   .account-title {
     padding-bottom: 15px;
     margin-bottom: 15px;
@@ -20,7 +20,5 @@
 }
 .account-page-children {
   margin-left: 27px;
-
-  min-height: 100%;
   width: 100%;
 }
