@@ -24,6 +24,7 @@ export const CartProvide = ({ children }) => {
     }, 0);
     return sumQty;
   }, [selectedItems]);
+
   const selectedItemsKey = useMemo(() => {
     return selectedItems.map((item) => {
       return item.key;
@@ -31,8 +32,9 @@ export const CartProvide = ({ children }) => {
   }, [selectedItems]);
 
   useEffect(() => {
-    const items = cartItems.filter((item) =>
-      selectedItemsKey.includes(item.id)
+    const items = cartItems.filter(
+      (item) =>
+        selectedItemsKey.includes(item.id) && item.qty <= item.product.quantity
     );
 
     setSelectedItems(items);

@@ -22,4 +22,20 @@
       }
     }
   }
+  &-banner-video {
+    display: flex;
+    .feature-text-paired {
+      padding: 72px;
+      text-align: center;
+      width: 50%;
+      .subheading {
+        font-size: 12px;
+        text-transform: uppercase;
+        margin-bottom: 27px;
+      }
+    }
+    video {
+      width: 50%;
+    }
+  }
 }

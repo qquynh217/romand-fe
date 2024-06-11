@@ -62,6 +62,13 @@
         height: 32px;
       }
     }
+    .product-qty-error {
+      button,
+      input {
+        border-color: #ff4d4f;
+        color: #ff4d4f;
+      }
+    }
     .product-total {
       color: var(--primary-color);
       font-weight: 600;

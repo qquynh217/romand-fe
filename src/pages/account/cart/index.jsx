@@ -55,6 +55,8 @@ function Cart() {
       dataIndex: "product",
       key: "product",
       align: "center",
+      width: "120px",
+
       render: (product) => <p>${product.price}</p>,
     },
     {
@@ -64,7 +66,11 @@ function Cart() {
       width: 115,
       align: "center",
       render: (val, rec) => (
-        <div>
+        <div
+          className={`product-qty ${
+            val > rec.product.quantity ? "product-qty-error" : ""
+          }`}
+        >
           <Space className="product-qty-input">
             <Button
               onClick={() => {
@@ -92,6 +98,7 @@ function Cart() {
       dataIndex: "qty",
       key: "qty",
       align: "center",
+      width: "120px",
       render: (val, rec) => (
         <p className="product-total">
           $<NumberFormat value={val * rec.product.price} />{" "}
@@ -103,7 +110,7 @@ function Cart() {
       dataIndex: "id",
       key: "id",
       align: "center",
-      width: 100,
+      width: 80,
       render: (val) => (
         <Popconfirm
           title="Delete item?"

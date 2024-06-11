@@ -1,6 +1,6 @@
-import { Button, Dropdown } from "antd";
+import { Badge, Button, Dropdown } from "antd";
 import { CartContext } from "context/CartContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { IoLogoInstagram, IoLogoYoutube } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from "resources/images/logo-text.avif";
@@ -15,10 +15,15 @@ import { productService } from "services/product";
 function Header() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { id, logout } = useAuthentication();
-  const { totalQuantities } = useContext(CartContext);
+  const { cartItems } = useContext(CartContext);
   const [category, setCategory] = useState([]);
   // Sticky Menu Area
-
+  const totalCartItem = useMemo(() => {
+    const sumQty = cartItems.reduce((res, item) => {
+      return res + item.qty;
+    }, 0);
+    return sumQty;
+  }, [cartItems]);
   useEffect(() => {
     window.addEventListener("scroll", isSticky);
     productService.getCategory().then((res) => {
@@ -124,8 +129,13 @@ function Header() {
                 <SearchIcon />
               </div>
               {id ? (
-                <Link to={ROUTE_URL.CART} className="navbar-item">
-                  <CartIcon />
+                <Link
+                  to={ROUTE_URL.CART}
+                  className="navbar-item navbar-item-cart"
+                >
+                  <Badge count={totalCartItem}>
+                    <CartIcon />
+                  </Badge>
                 </Link>
               ) : (
                 <Button
