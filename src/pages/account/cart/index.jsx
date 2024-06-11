@@ -3,10 +3,11 @@ import { CartContext } from "context/CartContext";
 import { useContext, useEffect } from "react";
 import NumberFormat from "components/NumberFormat";
 import { useAuthentication } from "store/useAuthentication";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
 import { cartService } from "services/cart";
 import showMessage from "components/Message";
+import { generateSlug } from "utils";
 
 const { Text } = Typography;
 
@@ -41,13 +42,16 @@ function Cart() {
       key: "product",
       width: "45%",
       render: (product) => (
-        <div className="product-info">
+        <Link
+          to={`/product/${generateSlug(product.name)}/${product.lineId}`}
+          className="product-info"
+        >
           <img src={product.image} alt="" />
           <div>
             <p className="product-name">{product.name}</p>
             <p className="product-option">#{product.optionName}</p>
           </div>
-        </div>
+        </Link>
       ),
     },
     {

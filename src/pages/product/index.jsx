@@ -72,7 +72,7 @@ function ProductDetail() {
           <Divider />
           <div className="product-options">
             <p className="product-options_name">
-              <b>{product.options[0].variantName}</b>: {selectedOption.name}
+              <b>{product.variantName}</b>: {selectedOption.name}
             </p>
             <div className="product-options_items">
               {product.options.map((item) => (

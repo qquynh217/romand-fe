@@ -8,6 +8,7 @@
         background-color: #fafafa;
         width: 20%;
         display: flex;
+        margin-bottom: 8px;
       }
       .product-list_items {
         flex: 1;
@@ -28,10 +29,31 @@
       padding: 72px;
       text-align: center;
       width: 50%;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
       .subheading {
-        font-size: 12px;
+        font-size: 14px;
         text-transform: uppercase;
         margin-bottom: 27px;
+      }
+      h2.majortitle {
+        font-size: 32px;
+        margin-bottom: 20px;
+      }
+      .ant-btn {
+        margin-top: 30px;
+        font-size: 16px;
+        background: #000;
+        color: #fafafa;
+        padding: 13px 31px;
+        height: auto;
+        width: auto;
+        &-primary:hover {
+          background-color: #fff !important;
+          border-color: #000;
+        }
       }
     }
     video {

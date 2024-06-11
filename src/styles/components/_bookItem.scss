@@ -4,6 +4,7 @@
   background: var(--bg);
   color: var(--text);
   transition: background 0.25s ease, color 0.25s ease;
+  height: 100%;
   &_img {
     position: relative;
     height: 0;

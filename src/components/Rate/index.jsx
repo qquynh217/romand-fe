@@ -7,11 +7,11 @@ const Rate = ({ value = 0, count = 5, showValue = false, size = 24 }) => {
       <div className="star-wrapper" style={{ gap: size / 2 }}>
         {Array.from({ length: count }, (_, i) =>
           i < Math.round(value) ? 1 : 0
-        ).map((item) =>
+        ).map((item, index) =>
           item == 1 ? (
-            <StarIcon width={size} height={size} />
+            <StarIcon width={size} height={size} key={index} />
           ) : (
-            <StarOutlineIcon width={size} height={size} />
+            <StarOutlineIcon width={size} height={size} key={index} />
           )
         )}
       </div>

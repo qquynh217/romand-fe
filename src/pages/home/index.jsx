@@ -1,13 +1,11 @@
-import axios from "axios";
+import { Button } from "antd";
 import Banner from "components/pages/home/Banner/Banner";
 import BestSellers from "components/pages/home/BestSellers/BestSellers";
 import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import bannerVideo from "resources/video/banner.mp4";
+import { ROUTE_URL } from "routes";
 
-export const getBook = async () => {
-  const res = await axios.get("http://localhost:8080/api/books");
-  return res.data;
-};
 function HomePage() {
   useEffect(() => {}, []);
   return (
@@ -21,22 +19,17 @@ function HomePage() {
             <h2 class="majortitle h1-style">
               GLASTING WATER TINT
               <br />
-              #SUNSET🫦
+              #SUNSET
             </h2>
             <div class="rte">
               <p>SUNSET WATER GLOSS ON YOUR LIPS</p>
             </div>
-            <div class="lightish-spaced-row-above">
-              <a
-                class="btn btn--secondary btn--link"
-                href="/products/glasting-color-gloss"
-              >
-                <span class="btn__text">SHOP NOW</span>
-              </a>
-            </div>
+            <Link to={ROUTE_URL.SHOP}>
+              <Button type="primary">SHOP NOW</Button>
+            </Link>
           </div>
 
-          <video src={bannerVideo} loop controls={false} autoPlay></video>
+          <video src={bannerVideo} loop controls={false} autoPlay muted></video>
         </div>
       </div>
     </div>

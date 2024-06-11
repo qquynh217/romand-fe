@@ -4,8 +4,9 @@ import dayjs from "dayjs";
 import { orderService } from "services/order";
 import { ORDER_STATUS } from "constant";
 import showMessage from "../Message";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
+import { generateSlug } from "utils";
 
 const OrderItem = ({ order, fetchData }) => {
   const navigate = useNavigate();
@@ -23,13 +24,16 @@ const OrderItem = ({ order, fetchData }) => {
       key: "id",
       width: "45%",
       render: (_val, product) => (
-        <div className="product-info">
+        <Link
+          to={`/product/${generateSlug(product.name)}/${product.lineId}`}
+          className="product-info"
+        >
           <img src={product.image} alt="" />
           <div>
             <p className="product-name">{product.name}</p>
             <p className="product-option">#{product.optionName}</p>
           </div>
-        </div>
+        </Link>
       ),
     },
     {
@@ -74,6 +78,23 @@ const OrderItem = ({ order, fetchData }) => {
       showMessage("error", "Cancel order failed!");
     }
   };
+  const handleReceived = async () => {
+    try {
+      const loading = showMessage("loading", "Loading...");
+      const res = await orderService.updateOrderStatus({
+        orderId: order.id,
+        status: ORDER_STATUS[3].value,
+      });
+      if (res.status == 200) {
+        message.destroy(loading);
+        showMessage("success", "Order received successfully!");
+        fetchData();
+      }
+    } catch (error) {
+      message.destroy(loading);
+      showMessage("error", "Confirm failed!");
+    }
+  };
   return (
     <div className="purchase-order-item">
       <div className="order-header">
@@ -108,6 +129,17 @@ const OrderItem = ({ order, fetchData }) => {
               cancelText="No"
             >
               <Button type="primary">Cancel</Button>
+            </Popconfirm>
+          )}
+          {order.newStatus == "Delivering" && (
+            <Popconfirm
+              title="Received Order?"
+              description="Do you have received your order?"
+              onConfirm={handleReceived}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button type="primary">Received Order</Button>
             </Popconfirm>
           )}
         </div>
