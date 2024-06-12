@@ -29,6 +29,7 @@ class ProductService {
     content,
     rate,
     headline,
+    id,
   }) => {
     return await axiosCus.post(this.baseUrl + "/sendFeedback", {
       customer_id,
@@ -36,7 +37,11 @@ class ProductService {
       content,
       rate,
       headline,
+      id,
     });
+  };
+  checkFeedback = async ({ userId, lineId }) => {
+    return axiosCus.post(this.baseUrl + "/checkFeedback", { userId, lineId });
   };
 }
 

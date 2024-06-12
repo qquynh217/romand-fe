@@ -4,20 +4,26 @@ import { useAuthentication } from "store/useAuthentication";
 import { useReviewForm } from "../../hooks/useReviewForm";
 import { productService } from "services/product";
 import showMessage from "components/Message";
+import { initFeedback } from "../Comments/Comments";
 
 function ReviewForm({ open, setOpen, fetchData }) {
   const { id } = useAuthentication();
   const [loading, setLoading] = useState(false);
   const handleCloseModal = () => {
-    setOpen("");
+    setOpen({
+      lineId: "",
+      feedback: initFeedback,
+    });
   };
   1;
   const handleSubmit = async (value) => {
     const reqData = {
       ...value,
       customer_id: id,
-      product_id: open,
+      product_id: open.lineId,
+      id: open.feedback.id || 0,
     };
+    // console.log(reqData);
     setLoading(true);
     try {
       const res = await productService.sendFeedback(reqData);
@@ -34,7 +40,7 @@ function ReviewForm({ open, setOpen, fetchData }) {
   };
   return (
     <Modal
-      open={open != ""}
+      open={open.lineId != ""}
       onCancel={handleCloseModal}
       footer={null}
       destroyOnClose={true}
@@ -43,7 +49,11 @@ function ReviewForm({ open, setOpen, fetchData }) {
       className="review-form-modal"
     >
       <h2 className="title">Share your thoughts</h2>
-      <Form onFinish={handleSubmit} layout="vertical">
+      <Form
+        onFinish={handleSubmit}
+        layout="vertical"
+        initialValues={open.feedback}
+      >
         <Form.Item
           name="rate"
           label="Rate your experience"

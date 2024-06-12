@@ -15,6 +15,7 @@ function ProductDetail() {
     images: [],
     options: [],
   });
+
   // console.log(product);
   const [selectedOption, setSelectedOption] = useState({
     id: "",
@@ -100,7 +101,9 @@ function ProductDetail() {
           </div>
         </div>
       </div>
-      <Comments bookid={product.lineId} />
+      <div id="#comment">
+        <Comments bookid={product.lineId} />
+      </div>
     </div>
   ) : (
     <Loader />

@@ -7,15 +7,55 @@ import CommentCard from "../CommentCard/CommentCard";
 import { useAuthentication } from "store/useAuthentication";
 import ReviewForm from "../ReviewForm/ReviewForm";
 import NumberFormat from "components/NumberFormat";
+import showMessage from "components/Message";
+
+export const initFeedback = {
+  content: "",
+  createdAt: "",
+  headline: "",
+  id: "",
+  productId: "",
+  rate: "",
+};
 
 function Comments({ bookid }) {
   const [review, setReview] = useState({});
   const { id } = useAuthentication();
-  const [open, setOpen] = useState("");
+  const [open, setOpen] = useState({
+    lineId: "",
+    feedback: initFeedback,
+  });
   const fetchData = async () => {
     try {
       const res = await productService.getProductFeedback({ lineId: bookid });
       if (res.status == 200) setReview(res.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const handleWrireReview = async () => {
+    try {
+      const res = await productService.checkFeedback({
+        userId: id,
+        lineId: bookid,
+      });
+      const { ref, feedback } = res.data.data;
+
+      if (ref != 0) {
+        if (feedback.id)
+          setOpen({
+            lineId: bookid,
+            feedback: feedback,
+          });
+        else {
+          setOpen({
+            lineId: bookid,
+            feedback: initFeedback,
+          });
+        }
+      } else {
+        showMessage("warning", "You have to buy this product to wrire review!");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -55,13 +95,7 @@ function Comments({ bookid }) {
           ))}
         </div>
         <div className="rate-new-review-btn">
-          <Button
-            type="primary"
-            onClick={() => {
-              setOpen(bookid);
-            }}
-            disabled={!id}
-          >
+          <Button type="primary" onClick={handleWrireReview} disabled={!id}>
             Write Review
           </Button>
         </div>

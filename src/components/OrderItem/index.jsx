@@ -1,15 +1,16 @@
 import { Button, Popconfirm, Space, Table, message } from "antd";
-import NumberFormat from "../NumberFormat";
-import dayjs from "dayjs";
-import { orderService } from "services/order";
 import { ORDER_STATUS } from "constant";
-import showMessage from "../Message";
+import dayjs from "dayjs";
 import { Link, useNavigate } from "react-router-dom";
 import { ROUTE_URL } from "routes";
+import { orderService } from "services/order";
 import { generateSlug } from "utils";
+import showMessage from "../Message";
+import NumberFormat from "../NumberFormat";
 
 const OrderItem = ({ order, fetchData }) => {
   const navigate = useNavigate();
+
   const column = [
     {
       title: "No",
@@ -60,7 +61,25 @@ const OrderItem = ({ order, fetchData }) => {
         </p>
       ),
     },
-  ];
+    {
+      title: "Review",
+      dataIndex: "id",
+      key: "id",
+      hiden: order.status != "Completed",
+      render: (_val, product) => (
+        <Button
+          type="link"
+          onClick={() => {
+            navigate(
+              `/product/${generateSlug(product.name)}/${product.lineId}#comment`
+            );
+          }}
+        >
+          Review
+        </Button>
+      ),
+    },
+  ].filter((item) => !item.hiden);
   const handleCancel = async () => {
     try {
       const loading = showMessage("loading", "Loading...");
