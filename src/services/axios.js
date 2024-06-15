@@ -1,7 +1,7 @@
 import showMessage from "components/Message";
 import axios from "axios";
 
-export const API_URL = "http://localhost:1337";
+export const API_URL = "http://172.104.188.248:4321";
 
 export const axiosCus = axios.create();
 

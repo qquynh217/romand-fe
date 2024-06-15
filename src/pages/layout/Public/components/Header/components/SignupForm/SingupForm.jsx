@@ -29,7 +29,7 @@ function SignupForm() {
         label="Phone number*"
         name="phone"
         register={register}
-        error={errors.email}
+        error={errors.phone}
       />
       <div className="form-item gender">
         <label htmlFor="gender" className="label">
@@ -53,7 +53,7 @@ function SignupForm() {
             value="female"
             {...register("gender")}
           />
-          <label for="femal">Femal</label>
+          <label for="femal">Female</label>
         </div>
         <div className="gender-option">
           <input

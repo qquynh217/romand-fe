@@ -6,17 +6,20 @@ import { useForm } from "react-hook-form";
 import { userService } from "services/user";
 import { useAuthentication } from "store/useAuthentication";
 import * as yup from "yup";
+import { REGEX_PASSWORD } from "constant";
 
 export const useLogin = (closeModal) => {
   const { login } = useAuthentication();
   const { fetchData } = useContext(CartContext);
   const schema = yup.object({
     username: yup.string().required("Username is required"),
-    password: yup.string().required("Password is required"),
-    // .matches(REGEX_PASSWORD, {
-    //   message:
-    //     "Password must contain at least 8 characters, 1 letter and 1 number",
-    // }),
+    password: yup
+      .string()
+      .required("Password is required")
+      .matches(REGEX_PASSWORD, {
+        message:
+          "Password must contain at least 8 characters, 1 letter and 1 number",
+      }),
   });
   const {
     register,

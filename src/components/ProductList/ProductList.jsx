@@ -1,6 +1,5 @@
 import { Col, Row } from "antd";
 import ProductItem from "../ProductItem/ProductItem";
-import { API_URL } from "services/axios";
 
 function ProductList({ col = 2, bookList = [0, 1, 2, 3], noFlex = false }) {
   const padding = col == 1 ? "0" : "";

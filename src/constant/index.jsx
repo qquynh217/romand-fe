@@ -16,7 +16,8 @@ export const categories = [
   { id: 4, name: "Fantasy", icon: FaStarOfDavid },
   { id: 5, name: "Poetry", icon: FaFeatherAlt },
 ];
-export const REGEX_PASSWORD = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+export const REGEX_PASSWORD =
+  /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*?&^_-]{8,}$/;
 export const REGEX_EMAIL =
   /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
 export const REGEX_PHONE =

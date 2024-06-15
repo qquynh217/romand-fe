@@ -63,7 +63,9 @@ function ProductDetail() {
         </div>
         <div className="product-detail-information">
           <h1 className="title">{product.name}</h1>
-          <h2 className="price">${round(product.defaultPrice, 2)} USD</h2>
+          <h2 className="price">
+            $ {round(selectedOption.price || product.defaultPrice, 2)} USD
+          </h2>
           <div className="rate" style={{ display: "flex", gap: 20 }}>
             <Rate value={Math.round(product?.rate * 10) / 10} />
             <span className="ant-rate-text">

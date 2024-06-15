@@ -1,14 +1,4 @@
-import {
-  Form,
-  Table,
-  Space,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Row,
-  Col,
-} from "antd";
+import { Form, Table, Space, Button, Radio, Select, Row, Col } from "antd";
 import { useContext, useEffect, useState } from "react";
 import SelectAddressModal from "components/pages/checkout/AddressModal";
 import { cartService } from "services/cart";
@@ -17,7 +7,7 @@ import { CartContext } from "context/CartContext";
 import { initAddress } from "../account/address";
 import NumberFormat from "components/NumberFormat";
 import { BsTicketPerforated } from "react-icons/bs";
-import { FaShippingFast, FaTicketAlt } from "react-icons/fa";
+import { FaShippingFast } from "react-icons/fa";
 import { payment } from "constant/fakeData";
 import { useCheckOut } from "hooks/useCheckOut";
 import { orderService } from "services/order";
@@ -36,18 +26,22 @@ function Checkout() {
   const [open, setOpen] = useState(false);
   const [form] = Form.useForm();
   const { id } = useAuthentication();
-  const { selectedItems, totalPrice, totalQuantities } =
+  const { selectedItems, totalPrice, totalQuantities, fetchData } =
     useContext(CartContext);
   const getListAddress = async () => {
     try {
       const res = await cartService.listAddress({ customer_id: id });
-      setAddress(res.data.data[0]);
+      setAddress(res.data.data[0] || initAddress);
     } catch (error) {
       console.log(error);
     }
   };
 
   const handleSubmit = async (value) => {
+    if (!address.id) {
+      showMessage("warning", "You haven't selected address");
+      return;
+    }
     const data = {
       ...value,
       addressId: address.id,
@@ -59,6 +53,7 @@ function Checkout() {
       const res = await orderService.createOrder(data);
       if (res.data.statusCode == 200) {
         navigate(`/checkout-success/${res.data.data.orderId}`);
+        fetchData && fetchData();
       } else {
         showMessage("error", "Place order failed!");
       }
@@ -160,7 +155,15 @@ function Checkout() {
               <h2>Shipping Option:</h2>
               <b>${info.shippingValue}</b>
             </div>
-            <Form.Item name="shippingTypeId">
+            <Form.Item
+              name="shippingTypeId"
+              rules={[
+                {
+                  required: true,
+                  message: "You haven't selected shipping type",
+                },
+              ]}
+            >
               <Radio.Group
                 onChange={(e) => {
                   e = e.target.value;

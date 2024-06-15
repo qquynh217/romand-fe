@@ -1,13 +1,15 @@
-import axios from "axios";
-import { StrictMode, useEffect } from "react";
+import { StrictMode, useEffect, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { RouterProvider } from "react-router-dom";
 import "react-slideshow-image/dist/styles.css";
 import { CartProvide } from "./context/CartContext";
 import { router } from "./routes";
+import { userService } from "./services/user";
 import { useAuthentication } from "./store/useAuthentication";
 import "./styles/_app.scss";
-import { userService } from "./services/user";
+import { Dropdown, FloatButton } from "antd";
+import { FaRegCommentDots } from "react-icons/fa";
+import Feedback from "./components/Feedback";
 
 function App() {
   const { login, logout } = useAuthentication();
@@ -48,6 +50,15 @@ function App() {
       <CartProvide>
         <Toaster />
         <RouterProvider router={router} />
+        <Dropdown
+          dropdownRender={() => <Feedback />}
+          trigger={["click"]}
+          placement="topRight"
+          overlayClassName="feedback-dropdown"
+          destroyPopupOnHide
+        >
+          <FloatButton icon={<FaRegCommentDots />} />
+        </Dropdown>
       </CartProvide>
     </StrictMode>
     // </div>

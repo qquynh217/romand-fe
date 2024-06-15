@@ -66,3 +66,27 @@ a {
 .public-layout-content {
   min-height: calc(100vh - 250px);
 }
+body {
+  --sb-track-color: #ffffff;
+  --sb-thumb-color: #fdd4e2;
+  --sb-size: 12px;
+}
+
+::-webkit-scrollbar {
+  width: var(--sb-size);
+}
+
+::-webkit-scrollbar-track {
+  background: var(--sb-track-color);
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-color);
+  border-radius: 20px;
+}
+@supports not selector(::-webkit-scrollbar) {
+  body {
+    scrollbar-color: var(--sb-thumb-color) var(--sb-track-color);
+  }
+}
