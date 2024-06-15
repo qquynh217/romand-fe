@@ -107,7 +107,7 @@ export const CartProvide = ({ children }) => {
         } else if (status == "-" && qty > 1) {
           qty -= 1;
           isUpdate = 1;
-          updateCart(item.id, item.qty + 1);
+          updateCart(item.id, item.qty - 1);
         }
       }
       return { ...item, qty: qty };

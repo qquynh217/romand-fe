@@ -2,7 +2,7 @@ import { Badge, Button, Dropdown } from "antd";
 import { CartContext } from "context/CartContext";
 import { useContext, useEffect, useMemo, useState } from "react";
 import { IoLogoInstagram, IoLogoYoutube } from "react-icons/io5";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Logo from "resources/images/logo-text.avif";
 import CartIcon from "resources/svg/Cart";
 import SearchIcon from "resources/svg/Search";
@@ -17,6 +17,7 @@ function Header() {
   const { id, logout } = useAuthentication();
   const { cartItems } = useContext(CartContext);
   const [category, setCategory] = useState([]);
+  const { pathname } = useLocation();
   // Sticky Menu Area
   const totalCartItem = useMemo(() => {
     const sumQty = cartItems.reduce((res, item) => {
@@ -100,17 +101,22 @@ function Header() {
               <img src={Logo} alt="logo" />
             </Link>
             <div className="category">
-              <Link to={ROUTE_URL.SHOP} className="category-item">
+              <NavLink
+                to={ROUTE_URL.SHOP}
+                className={`category-item all ${
+                  pathname == "/shop" ? "all-active" : ""
+                }`}
+              >
                 <p>All products</p>
-              </Link>
+              </NavLink>
               {category.map((item) => (
-                <Link
+                <NavLink
                   to={ROUTE_URL.SHOP + "/" + item.key}
                   className="category-item"
                   key={item.id}
                 >
                   <p>{item.name}</p>
-                </Link>
+                </NavLink>
               ))}
             </div>
             <div className="page-header_right">

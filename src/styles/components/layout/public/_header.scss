@@ -104,3 +104,7 @@
     }
   }
 }
+.category-item.active:not(.all),
+.category-item.all-active {
+  background: rgba(0, 0, 0, 0.05);
+}

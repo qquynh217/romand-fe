@@ -6,8 +6,15 @@ import Rate from "../Rate";
 function ProductItem({ className = "", noFlex = false, item }) {
   const navigate = useNavigate();
   const goToProductDetail = () => {
+    closeSearch();
     const slug = generateSlug(item.name);
     navigate(`/product/${slug}/${encodeURIComponent(item.lineId)}`);
+  };
+  const closeSearch = () => {
+    const search = document.querySelector(".header-search-container");
+    const main = document.querySelector(".public-layout-content");
+    search.style.display = "none";
+    main.style.display = "block";
   };
 
   const toggleOptions = () => {
