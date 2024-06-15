@@ -27,7 +27,7 @@ function BestSellers() {
     <div className="best-sellers">
       <div className="product-list-block">
         <div className="product-list-heading-block">
-          <Link to={ROUTE_URL.SHOP}>Bestsellers</Link>
+          <Link to={ROUTE_URL.SHOP}>All products</Link>
         </div>
         <div className="product-list_items">
           <ProductList col={4} bookList={products.slice(0, 4)} />
@@ -38,7 +38,10 @@ function BestSellers() {
           <Link to={ROUTE_URL.SHOP}>New Arrivals</Link>
         </div>
         <div className="product-list_items">
-          <ProductList col={4} bookList={products.slice(4, 8)} />
+          <ProductList
+            col={4}
+            bookList={products.slice(products.length - 4, products.length)}
+          />
         </div>
       </div>
     </div>
