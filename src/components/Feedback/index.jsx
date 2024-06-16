@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import { feedbackService } from "services/feedback";
-import { Avatar, Button, Form, Input } from "antd";
-import { FaUser } from "react-icons/fa";
+import { Avatar, Button, Form, Input, Typography } from "antd";
+import { FaUser, FaCheckCircle } from "react-icons/fa";
 import dayjs from "dayjs";
 import avatar from "resources/images/admin-avatar.webp";
 import { useAuthentication } from "store/useAuthentication";
 import showMessage from "../Message";
+
+const { Paragraph } = Typography;
 
 const Feedback = () => {
   const [feedback, setFeedback] = useState([]);
@@ -51,8 +53,8 @@ const Feedback = () => {
           <div className="feedback-item" key={index}>
             <div className="feedback-item-header">
               <Avatar
-                size={40}
-                icon={<FaUser size={20} />}
+                size={30}
+                icon={<FaUser size={15} />}
                 src={item.avatar || undefined}
               />
               <div className="user-info">
@@ -66,12 +68,15 @@ const Feedback = () => {
                 <div className="feedback-reply-item" key={id}>
                   <div className="feedback-item-header">
                     <Avatar
-                      size={40}
+                      size={30}
                       icon={<FaUser size={20} />}
                       src={avatar}
                     />
                     <div className="user-info">
-                      <b>Romand Amin</b>
+                      <b>
+                        Rom&nd Admin{" "}
+                        <FaCheckCircle color="green" style={{ fontSize: 11 }} />
+                      </b>
                       <p>{dayjs(reply.createdAt).format("DD/MM/YYYY HH:mm")}</p>
                     </div>
                   </div>

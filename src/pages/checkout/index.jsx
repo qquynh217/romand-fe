@@ -49,18 +49,18 @@ function Checkout() {
       totalPrice: totalPrice + info.shippingValue - info.voucher,
     };
     console.log(data);
-    try {
-      const res = await orderService.createOrder(data);
-      if (res.data.statusCode == 200) {
-        navigate(`/checkout-success/${res.data.data.orderId}`);
-        fetchData && fetchData();
-      } else {
-        showMessage("error", "Place order failed!");
-      }
-    } catch (error) {
-      console.log(error);
-      showMessage("error", "Place order failed!");
-    }
+    // try {
+    //   const res = await orderService.createOrder(data);
+    //   if (res.data.statusCode == 200) {
+    //     navigate(`/checkout-success/${res.data.data.orderId}`);
+    //     fetchData && fetchData();
+    //   } else {
+    //     showMessage("error", "Place order failed!");
+    //   }
+    // } catch (error) {
+    //   console.log(error);
+    //   showMessage("error", "Place order failed!");
+    // }
   };
 
   useEffect(() => {
