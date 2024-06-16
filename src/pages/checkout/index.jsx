@@ -13,6 +13,7 @@ import { useCheckOut } from "hooks/useCheckOut";
 import { orderService } from "services/order";
 import { useNavigate } from "react-router-dom";
 import showMessage from "components/Message";
+import dayjs from "dayjs";
 
 function Checkout() {
   const [address, setAddress] = useState(initAddress);
@@ -49,18 +50,18 @@ function Checkout() {
       totalPrice: totalPrice + info.shippingValue - info.voucher,
     };
     console.log(data);
-    // try {
-    //   const res = await orderService.createOrder(data);
-    //   if (res.data.statusCode == 200) {
-    //     navigate(`/checkout-success/${res.data.data.orderId}`);
-    //     fetchData && fetchData();
-    //   } else {
-    //     showMessage("error", "Place order failed!");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    //   showMessage("error", "Place order failed!");
-    // }
+    try {
+      const res = await orderService.createOrder(data);
+      if (res.data.statusCode == 200) {
+        navigate(`/checkout-success/${res.data.data.orderId}`);
+        fetchData && fetchData(id);
+      } else {
+        showMessage("error", "Place order failed!");
+      }
+    } catch (error) {
+      console.log(error);
+      showMessage("error", "Place order failed!");
+    }
   };
 
   useEffect(() => {
@@ -209,6 +210,15 @@ function Checkout() {
                           <p>{item.name}</p>
                         </div>
                         <span>{item.description}</span>
+                        <p
+                          style={{
+                            color: "gray",
+                            fontSize: 12,
+                            textAlign: "end",
+                          }}
+                        >
+                          Expired: {dayjs(item.endDate).format("DD/MM/YYYY")}
+                        </p>
                       </div>
                     ),
                   }))}
@@ -252,8 +262,13 @@ function Checkout() {
                   <p>
                     $<NumberFormat value={totalPrice} />
                   </p>
-                  <p>${info.shippingValue}</p>
-                  <p>-${info.voucher}</p>
+                  <p>
+                    <NumberFormat value={info.shippingValue} prefix="$" />
+                  </p>
+                  <p>
+                    -$
+                    <NumberFormat value={info.voucher} />
+                  </p>
                   <h2>
                     $
                     <NumberFormat
