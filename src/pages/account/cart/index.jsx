@@ -29,7 +29,7 @@ function Cart() {
       const res = await cartService.deleteCart({ id });
       if (res.status == 200) {
         showMessage("success", "Delete Items successful!");
-        fetchData();
+        fetchData(id);
       }
     } catch (error) {
       console.log(error);
